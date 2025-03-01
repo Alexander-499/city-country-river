@@ -1,0 +1,96 @@
+header {
+  height: 64px;
+  width: calc(100% - 32px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(20px) saturate(1.5) brightness(0.5);
+  color: white;
+  padding: 0 16px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+header > .header-left {
+  font-size: 32px;
+  font-weight: 700;
+}
+header > .header-left > a {
+  color: white;
+  text-decoration: none;
+}
+header > .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+header > .header-right > .coins {
+  display: flex;
+  gap: 4px;
+  font-weight: 700;
+}
+header > .header-right > .coins > div {
+  height: 24px;
+  width: 24px;
+  background-image: url(../../assets/images/coin.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+header > .header-right > .profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+header > .header-right > .profile:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+header > .header-right > .profile > .profile-picture {
+  height: 40px;
+  width: 40px;
+  background-image: url(https://c.makeitmeme.com/avatar/cool-pepe-d239a60d-K6MPtevh.webp);
+  background-position: center;
+  background-size: contain;
+  border-radius: 50%;
+}
+header > .header-right > .profile > .profile-name {
+  font-weight: 700;
+}
+header > .header-right > .profile > .profile-name > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 12px;
+}
+header > .header-right > .profile > .profile-name > div > span {
+  color: goldenrod;
+}
+header > .header-right > .profile > .profile-name > div > progress {
+  height: 8px;
+  width: 64px;
+  border-radius: inherit;
+  transform: skew(-12deg);
+}
+header > .header-right > .profile > .profile-name > div > progress::-webkit-progress-bar {
+  background-color: #87a;
+  border-radius: 3px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+header > .header-right > .profile > .profile-name > div > progress::-webkit-progress-value {
+  background-color: goldenrod;
+  border-radius: 3px;
+}
+header > .header-right > .friends {
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+header > .header-right > .friends:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}/*# sourceMappingURL=header.css.map */

@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Lato, "Segoe UI";
+
+  body {
+    display: flex;
+    flex-direction: column;
+    background-color: #111;
+    background: linear-gradient(90deg, rgb(0, 17, 95), rgb(98, 0, 110));
+    color-scheme: dark;
+    
+    &::-webkit-scrollbar { 
+      display: none;
+    }
+  }
+}

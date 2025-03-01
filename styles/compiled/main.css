@@ -1,0 +1,192 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
+main > div.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+main > div.home > section.play-section {
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+main > div.home > section.play-section > div.play-section-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+main > div.home > section.play-section > div.play-section-center > div {
+  height: 256px;
+  width: 192px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.home > section.play-section > div.play-section-center > div:hover {
+  scale: 1.1;
+}
+main > div.home > section.play-section > div.play-section-center > div:active {
+  scale: 0.95;
+}
+main > div.home > section.play-section > div.play-section-center > .create-lobby {
+  background-color: rgb(255, 56, 56);
+}
+main > div.home > section.play-section > div.play-section-center > .join-lobby {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: rgb(40, 40, 255);
+}
+main > div.home > section.play-section > div.play-section-center > .join-lobby > div > input {
+  height: 32px;
+  width: 24px;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+}
+main > div.home > section.play-section > div.play-section-center > .join-lobby > div > input:focus {
+  outline: none;
+}
+main > div.home > section.play-section > div.play-section-center > .join-lobby > button {
+  padding: 8px;
+  background-color: #121212;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+main > div.home > section.play-section > div.play-section-bottom {
+  padding: 12px 0;
+}
+main > div.home > section.play-section > div.play-section-bottom > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+main > div.home > section.how-to-play-section {
+  height: 100vh;
+  background: linear-gradient(0, #00051d, #001369, #2e3e8f);
+  box-shadow: 0 0 20px 10px rgba(46, 62, 144, 0.5);
+}
+main > div.game {
+  height: calc(100vh - 64px);
+  display: flex;
+}
+main > div.game > div.main {
+  width: calc(100% - 400px);
+}
+main > div.game > div.sidebar {
+  width: 400px;
+  background-color: #313338;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1) inset;
+}
+main > div.game > div.sidebar > div:not(div.tabs) {
+  display: none;
+}
+main > div.game > div.sidebar > div:not(div.tabs).active {
+  display: flex;
+}
+main > div.game > div.sidebar > div.tabs {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-bottom: 2px #26282c solid;
+}
+main > div.game > div.sidebar > div.tabs > button {
+  background-color: transparent;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.sidebar > div.tabs > button:hover, main > div.game > div.sidebar > div.tabs > button.active:hover {
+  background-color: rgba(78, 80, 88, 0.3019607843);
+}
+main > div.game > div.sidebar > div.tabs > button:active, main > div.game > div.sidebar > div.tabs > button.active:active {
+  background-color: rgba(78, 80, 88, 0.4784313725);
+}
+main > div.game > div.sidebar > div.tabs > button.active {
+  background-color: rgba(78, 80, 88, 0.6);
+}
+main > div.game > div.sidebar > div.chat {
+  height: calc(100% - 50px);
+  flex-direction: column;
+}
+main > div.game > div.sidebar > div.chat > div.chat-log {
+  height: calc(100% - 44px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 12px;
+}
+main > div.game > div.sidebar > div.chat > div.chat-log > div {
+  display: flex;
+  align-items: center;
+}
+main > div.game > div.sidebar > div.chat > div.chat-log > div > span.time {
+  color: gray;
+  font-size: 12px;
+  margin-right: 8px;
+}
+main > div.game > div.sidebar > div.chat > div.chat-log > div > span.badge {
+  border-radius: 4px;
+  padding: 0 2px 6px;
+  margin-right: 8px;
+}
+main > div.game > div.sidebar > div.chat > div.chat-log > div > span.badge.lobby-leader {
+  background-color: rgba(218, 165, 32, 0.3);
+}
+main > div.game > div.sidebar > div.chat > div.chat-log > div > span.name {
+  font-weight: 700;
+}
+main > div.game > div.sidebar > div.chat > div.chat-log > div > span.game-message.join {
+  color: cyan;
+}
+main > div.game > div.sidebar > div.chat > div.input {
+  height: 44px;
+  display: flex;
+  background-color: #383a40;
+  border-radius: 8px 8px 0 0;
+}
+main > div.game > div.sidebar > div.chat > div.input > textarea {
+  height: 20px;
+  width: calc(100% - 52px);
+  background-color: transparent;
+  font-size: 1rem;
+  border: none;
+  padding: 12px;
+  resize: none;
+}
+main > div.game > div.sidebar > div.chat > div.input > textarea:focus {
+  outline: none;
+}
+main > div.game > div.sidebar > div.chat > div.input > button {
+  height: 100%;
+  width: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}/*# sourceMappingURL=main.css.map */

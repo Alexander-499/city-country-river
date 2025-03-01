@@ -1,0 +1,28 @@
+<div class="home">
+  <section class="play-section">
+    <div></div>
+    <div class="play-section-center">
+      <div class="create-lobby" onclick="createLobbyOverlay(1);">
+        <span>Create lobby</span>
+      </div>
+      <div class="join-lobby">
+        <span>Join a lobby</span>
+        <div id="joinLobbyInputContainer">
+          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+        </div>
+        <button onclick="combineValuesAndNavigate();">Join</button>
+      </div>
+    </div>
+    <div class="play-section-bottom">
+      <div onclick="window.scrollTo({ top: document.documentElement.scrollHeight - window.innerHeight, behavior: 'smooth' });">
+        <i>How to Play</i>
+        <span>▼</span>
+      </div>
+    </div>
+  </section>
+  <section class="how-to-play-section"></section>
+</div>

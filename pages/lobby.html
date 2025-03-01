@@ -1,0 +1,31 @@
+<div class="game">
+  <div class="main">
+    LOBBY<br>Lobby code:<span id="gameCode"></span>
+  </div>
+  <div class="sidebar">
+    <div class="tabs">
+      <button class="active" onclick="switchSidebarTab('sidebarChat', this)">💬️ Chat</button>
+      <button onclick="switchSidebarTab('sidebarLobby', this)">👨‍👩‍👧‍👦 Lobby</button>
+      <button onclick="switchSidebarTab('sidebarSettings', this)">⚙️ Settings</button>
+    </div>
+    <div id="sidebarChat" class="chat active">
+      <div class="chat-log">
+        <div><span class="time">22:06</span><span class="badge lobby-leader" title="Lobby leader">👑</span><span class="name">Alexander499</span>:&nbsp;<span>Hello</span></div>
+        <div><span class="time">22:08</span><span class="game-message join">Pateighto has joined the game</span></div>
+        <div><span class="time">22:09</span><span class="name">Pateighto</span>:&nbsp;<span>Hey, buddy</span></div>
+      </div>
+      <div class="input">
+        <textarea id="chatTextarea" maxlength="96" placeholder="Type here to chat"></textarea>
+        <button>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.02 14 11.4a.6.6 0 0 1 0 1.18L6.6 14l-2.94 5.87a1.48 1.48 0 0 0 1.99 1.98l17.03-8.52a1.48 1.48 0 0 0 0-2.64L5.65 2.16a1.48 1.48 0 0 0-1.99 1.98l2.94 5.88Z" class=""></path></svg>
+        </button>
+      </div>
+    </div>
+    <div id="sidebarLobby" class="lobby">
+      <h2>Lobby</h2>
+    </div>
+    <div id="sidebarSettings" class="settings">
+      <h2>Settings</h2>
+    </div>
+  </div>
+</div>

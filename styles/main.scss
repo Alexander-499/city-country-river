@@ -1,0 +1,214 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+
+  > div.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    > section.play-section {
+      height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+  
+      > div.play-section-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+  
+        > div {
+          height: 256px;
+          width: 192px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          border-radius: 12px;
+          font-size: 20px;
+          font-weight: 700;
+          box-shadow: 0 0 16px rgba(black, 0.5);
+          cursor: pointer;
+          transition-duration: 200ms;
+        
+          &:hover { scale: 1.1; }
+          &:active { scale: 0.95; }
+        }
+    
+        > .create-lobby {
+          background-color: rgb(255, 56, 56);
+        }
+    
+        > .join-lobby {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          background-color: rgb(40, 40, 255);
+    
+          > div {
+    
+            > input {
+              height: 32px;
+              width: 24px;
+              border: none;
+              border-radius: 8px;
+              text-align: center;
+    
+              &:focus {
+                outline: none;
+              }
+            }
+          }
+    
+          > button {
+            padding: 8px;
+            background-color: #121212;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+          }
+        }
+      }
+  
+      > div.play-section-bottom {
+        padding: 12px 0;
+  
+        > div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    > section.how-to-play-section {
+      height: 100vh;
+      background: linear-gradient(0, #00051d, #001369, #2e3e8f);
+      box-shadow: 0 0 20px 10px rgba(46, 62, 144, 0.5);
+    }
+  }
+
+  > div.game {
+    height: calc(100vh - 64px);
+    display: flex;
+
+    > div.main {
+      width: calc(100% - 400px);
+    }
+
+    > div.sidebar {
+      width: 400px;
+      background-color: #313338;
+      box-shadow: 0 0 16px rgba(black, 0.1) inset;
+
+      > div:not(div.tabs) {
+        display: none;
+
+        &.active {
+          display: flex;
+        }
+      }
+
+      > div.tabs {
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-bottom: 2px #26282c solid;
+
+        > button {
+          background-color: transparent;
+          font-size: 16px;
+          border: none;
+          border-radius: 4px;
+          padding: 2px 8px;
+          cursor: pointer;
+          transition-duration: 200ms;
+
+          &:hover, &.active:hover { background-color: #4e50584d; }
+          &:active, &.active:active { background-color: #4e50587a; }
+          &.active { background-color: #4e505899; }
+        }
+      }
+
+      > div.chat {
+        height: calc(100% - 50px);
+        flex-direction: column;
+
+        > div.chat-log {
+          height: calc(100% - 44px);
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          padding: 4px 12px;
+
+          > div {
+            display: flex;
+            align-items: center;
+
+            > span.time {
+              color: gray;
+              font-size: 12px;
+              margin-right: 8px;
+            }
+
+            > span.badge {
+              border-radius: 4px;
+              padding: 0 2px 6px;
+              margin-right: 8px;
+
+              &.lobby-leader {background-color: rgba(goldenrod, 0.3);}
+            }
+
+            > span.name {
+              font-weight: 700;
+            }
+
+            > span.game-message.join { color: cyan; }
+          }
+        }
+
+        > div.input {
+          height: 44px;
+          display: flex;
+          background-color: #383a40;
+          border-radius: 8px 8px 0 0;
+
+          > textarea {
+            height: 20px;
+            width: calc(100% - 52px);
+            background-color: transparent;
+            font-size: 1rem;
+            border: none;
+            padding: 12px;
+            resize: none;
+
+            &:focus {
+              outline: none;
+            }
+          }
+
+          > button {
+            height: 100%;
+            width: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

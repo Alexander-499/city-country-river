@@ -1,0 +1,148 @@
+.create-lobby-overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 99;
+  animation: fadeIn 300ms;
+}
+.create-lobby-overlay.animation-fade-out {
+  animation: fadeOut 300ms forwards;
+}
+.create-lobby-overlay > div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #313338;
+  padding: 16px;
+  border-radius: 8px;
+  color: white;
+  animation: zoomIn 300ms;
+}
+.create-lobby-overlay > div.animation-zoom-out {
+  animation: zoomOut 300ms forwards !important;
+}
+.create-lobby-overlay > div > div.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.create-lobby-overlay > div > div.title > div {
+  height: 24px;
+  width: 24px;
+}
+.create-lobby-overlay > div > div.title > h2 {
+  text-align: center;
+}
+.create-lobby-overlay > div > div.title > button {
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #73767d;
+  border: none;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+.create-lobby-overlay > div > div.title > button:hover {
+  color: white;
+}
+.create-lobby-overlay > div > input {
+  height: 32px;
+  width: 100%;
+  background-color: #1e1f22;
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+}
+.create-lobby-overlay > div > input:focus {
+  outline: none;
+}
+.create-lobby-overlay > div > div.lobby-privacy {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.create-lobby-overlay > div > div.lobby-privacy > input {
+  display: none;
+}
+.create-lobby-overlay > div > div.lobby-privacy > input:checked + label {
+  background-color: rgb(75, 0, 75);
+}
+.create-lobby-overlay > div > div.lobby-privacy > input:checked + label > span {
+  text-decoration: underline;
+}
+.create-lobby-overlay > div > div.lobby-privacy > label {
+  width: 100%;
+  display: block;
+  background-color: purple;
+  text-align: center;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+.create-lobby-overlay > div > div.lobby-privacy > label:first-of-type {
+  border-radius: 16px 0 0 16px;
+}
+.create-lobby-overlay > div > div.lobby-privacy > label:last-of-type {
+  border-radius: 0 16px 16px 0;
+}
+.create-lobby-overlay > div > button {
+  height: 32px;
+  width: 100%;
+  background-color: rgb(255, 56, 56);
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+.create-lobby-overlay > div > button:hover {
+  background-color: rgb(145, 11, 11);
+}
+.create-lobby-overlay > div > button:active {
+  scale: 0.9;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.2);
+  }
+}/*# sourceMappingURL=create-lobby-overlay.css.map */
