@@ -98,20 +98,7 @@
   border-radius: 0 16px 16px 0;
 }
 .create-lobby-overlay > div > button {
-  height: 32px;
   width: 100%;
-  background-color: rgb(255, 56, 56);
-  text-align: center;
-  border: none;
-  border-radius: 16px;
-  cursor: pointer;
-  transition-duration: 200ms;
-}
-.create-lobby-overlay > div > button:hover {
-  background-color: rgb(145, 11, 11);
-}
-.create-lobby-overlay > div > button:active {
-  scale: 0.9;
 }
 
 @keyframes fadeIn {

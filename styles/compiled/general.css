@@ -12,4 +12,30 @@
 }
 * body::-webkit-scrollbar {
   display: none;
+}
+*:disabled {
+  cursor: no-drop !important;
+}
+
+.round-button {
+  height: 32px;
+  background-color: #ff3838;
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+  padding: 0 12px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+.round-button:hover {
+  background-color: #930b0b;
+}
+.round-button:active {
+  scale: 0.9;
+}
+.round-button.green {
+  background-color: #26aa36;
+}
+.round-button.green:hover {
+  background-color: #1b930b;
 }/*# sourceMappingURL=general.css.map */

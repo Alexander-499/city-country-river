@@ -14,4 +14,27 @@
       display: none;
     }
   }
+
+  &:disabled {
+    cursor: no-drop !important;
+  }
+}
+
+.round-button {
+  height: 32px;
+  background-color: #ff3838;
+  text-align: center;
+  border: none;
+  border-radius: 16px;
+  padding: 0 12px;
+  cursor: pointer;
+  transition-duration: 200ms;
+
+  &:hover { background-color: #930b0b; }
+  &:active { scale: 0.9; }
+
+  &.green {
+    background-color: #26aa36;
+    &:hover { background-color: #1b930b; }
+  }
 }

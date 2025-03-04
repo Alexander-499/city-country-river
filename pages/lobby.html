@@ -1,6 +1,162 @@
 <div class="game">
+  <div class="rules">
+    <div class="heading"><h1>Rules</h1></div>
+    <div class="rules-main">
+      <fieldset>
+        <div>
+          <div>
+            <div class="label"><span>Categories</span></div>
+            <div class="field categories">
+              <h4>Selected (<span>3</span>)</h4>
+              <div class="selected">
+                <span>City</span>
+                <span>Country</span>
+                <span>River</span>
+              </div>
+              <h4>Suggestions</h4>
+              <div class="suggestions">
+                <span>Animal</span>
+                <span>Name</span>
+                <span>Food</span>
+              </div>
+              <div class="own-categories">
+                <div class="text-field">
+                  <input type="text" maxlength="32" placeholder="Own category name">
+                  <button class="add" title="Add own category">
+                    <img src="../../assets/images/add.svg">
+                    <img src="../../assets/images/add-hover.svg">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="label"><span>Everybody can edit categories</span></div>
+            <div class="field">
+              <label class="toggle-switch">
+                <input type="checkbox">
+                <span class="slider">
+                  <img class="unchecked" src="../../assets/images/toggle-switch-unchecked.svg">
+                  <img class="checked" src="../../assets/images/toggle-switch-checked.svg">
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div>
+            <div class="label"><span>Rounds</span></div>
+            <div class="field">
+              <div class="value">1</div>
+              <input id="range" type="range" value="1" min="1" max="20">
+            </div>
+          </div>
+          <div>
+            <div class="label"><span>Round end</span></div>
+            <div class="field"><form class="radio">
+              <label class="red"><input type="radio" name="radio">Press stop</label>
+              <label class="yellow"><input type="radio" name="radio" checked>Press stop & time limit</label>
+              <label class="green"><input type="radio" name="radio">Time limit</label>
+            </form></div>
+          </div>
+          <div>
+            <div class="label"><span>Time limit</span></div>
+            <div class="field">
+              <div class="value minutes">1</div>
+              <input id="range" type="range" value="1" min="1" max="20">
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div>
+            <div class="label"><span>Show scores</span></div>
+            <div class="field"><form class="radio">
+              <label class="yellow"><input type="radio" name="radio">Live, during voting</label>
+              <label class="green"><input type="radio" name="radio" checked>After each round</label>
+              <label class="blue"><input type="radio" name="radio">Game end</label>
+            </form></div>
+          </div>
+          <div class="row">
+            <div class="label"><span>Anonymous voting</span></div>
+            <div class="field">
+              <label class="toggle-switch">
+                <input type="checkbox">
+                <span class="slider">
+                  <img class="unchecked" src="../../assets/images/toggle-switch-unchecked.svg">
+                  <img class="checked" src="../../assets/images/toggle-switch-checked.svg">
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div class="row">
+            <div class="label"><span>Teams</span></div>
+            <div class="field">
+              <label class="toggle-switch">
+                <input type="checkbox" disabled>
+                <span class="slider">
+                  <img class="unchecked" src="../../assets/images/toggle-switch-unchecked.svg">
+                  <img class="checked" src="../../assets/images/toggle-switch-checked.svg">
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="label"><span>Everybody can choose teams</span></div>
+            <div class="field">
+              <label class="toggle-switch">
+                <input type="checkbox" disabled>
+                <span class="slider">
+                  <img class="unchecked" src="../../assets/images/toggle-switch-unchecked.svg">
+                  <img class="checked" src="../../assets/images/toggle-switch-checked.svg">
+                </span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <div class="field">
+              <button class="blue" disabled>Shuffle teams</button>
+            </div>
+          </div>
+          <div>
+            <div class="field column">
+              <div class="team">
+                <div class="text-field">
+                  <input type="text" maxlength="32" placeholder="Team name" disabled>
+                  <div class="team-players"><div>Alexander499</div><div>Pateighto</div></div>
+                </div>
+                <div class="buttons">
+                  <button class="trash" title="Delete team" disabled>
+                    <img src="../../assets/images/trash.svg">
+                    <img src="../../assets/images/trash-hover.svg">
+                  </button>
+                  <button class="add" title="Add player" disabled>
+                    <img src="../../assets/images/add.svg">
+                    <img src="../../assets/images/add-hover.svg">
+                  </button>
+                </div>
+              </div>
+              <button class="gray" disabled>Add another team</button>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
   <div class="main">
-    LOBBY<br>Lobby code:<span id="gameCode"></span>
+    <div class="top-bar">
+      <span class="player-wait">⏳ Waiting for <span>2</span> more players…</span>
+      <span class="close-rules">📜 Close the rules to start the game…</span>
+      <div>
+        <button class="round-button" onclick="document.querySelector(`.game > .rules`)?.classList.toggle(`active`);">Edit rules</button>
+        <button class="round-button green">Start game</button>
+      </div>
+    </div>
+    <div class="middle">Lobby code: <span id="gameCode"></span></div>
   </div>
   <div class="sidebar">
     <div class="tabs">

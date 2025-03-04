@@ -10,17 +10,26 @@ header {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
 header > .header-left {
-  font-size: 32px;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 header > .header-left > a {
   color: white;
+  font-size: min(3vw, 32px);
+  font-weight: 700;
   text-decoration: none;
+}
+header > .header-left > span {
+  color: gray;
+  font-size: min(2vw, 24px);
+  font-weight: 500;
+  cursor: copy;
 }
 header > .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 header > .header-right > .coins {
   display: flex;
@@ -35,17 +44,19 @@ header > .header-right > .coins > div {
   background-repeat: no-repeat;
   background-size: contain;
 }
+header > .header-right > .profile, header > .header-right > .friends {
+  border-radius: 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+header > .header-right > .profile:hover, header > .header-right > .friends:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 header > .header-right > .profile {
   display: flex;
   align-items: center;
   gap: 8px;
-  border-radius: 8px;
   padding: 8px 10px;
-  cursor: pointer;
-  transition-duration: 200ms;
-}
-header > .header-right > .profile:hover {
-  background-color: rgba(0, 0, 0, 0.5);
 }
 header > .header-right > .profile > .profile-picture {
   height: 40px;
@@ -86,11 +97,9 @@ header > .header-right > .profile > .profile-name > div > progress::-webkit-prog
 header > .header-right > .friends {
   background-color: transparent;
   border: none;
-  border-radius: 8px;
-  padding: 2px 8px;
+  padding: 2px 4px;
   cursor: pointer;
-  transition-duration: 200ms;
 }
-header > .header-right > .friends:hover {
-  background-color: rgba(0, 0, 0, 0.5);
+header > .header-right > .friends > img {
+  height: 36px;
 }/*# sourceMappingURL=header.css.map */

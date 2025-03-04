@@ -1,3 +1,4 @@
+@charset "UTF-8";
 main {
   display: flex;
   flex-direction: column;
@@ -86,14 +87,467 @@ main > div.home > section.how-to-play-section {
 main > div.game {
   height: calc(100vh - 64px);
   display: flex;
+  transition-duration: 400ms;
+}
+main > div.game > div.rules.active {
+  width: 400px;
+}
+main > div.game > div.rules.active ~ div.main {
+  width: calc(100% - 800px);
+}
+main > div.game > div.rules.active ~ div.main > div.top-bar > span.player-wait {
+  display: none;
+}
+main > div.game > div.rules.active ~ div.main > div.top-bar > span.close-rules {
+  display: block;
+}
+main > div.game > div {
+  transition: width 500ms;
+}
+main > div.game > div.rules {
+  width: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #313338;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1) inset;
+  z-index: 1;
+  overflow: hidden scroll;
+}
+main > div.game > div.rules > div.heading {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px #26282c solid;
+}
+main > div.game > div.rules > div.rules-main {
+  height: calc(100% - 50px);
+  display: flex;
+}
+main > div.game > div.rules > div.rules-main > fieldset {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: none;
+  padding: 16px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div:last-of-type {
+  padding-bottom: 16px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div.divider {
+  height: 2px;
+  background-color: #3f4147;
+  border: 1px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div.row {
+  flex-direction: row;
+  align-items: center;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div.row > div.label {
+  width: 100%;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div.row > div.field {
+  width: auto;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.label {
+  color: #b5bac1;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.column {
+  flex-direction: column;
+  align-items: normal;
+  gap: 8px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories {
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
+  gap: 12px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.selected, main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories div.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.selected:hover > span, main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories div.suggestions:hover > span {
+  padding: 2px 24px 4px 8px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.selected:hover > span::after, main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories div.suggestions:hover > span::after {
+  position: absolute;
+  right: 0;
+  padding-right: 6px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.selected.selected:hover > span::after, main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories div.suggestions.selected:hover > span::after {
+  position: absolute;
+  right: 0;
+  content: "✕";
+  color: red;
+  font-size: 16px;
+  font-weight: 900;
+  padding-right: 6px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.selected.selected > span, main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories div.suggestions.selected > span {
+  background-color: #23a55a;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.selected.suggestions:hover > span::after, main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories div.suggestions.suggestions:hover > span::after {
+  position: absolute;
+  right: 0;
+  content: "+";
+  font-size: 24px;
+  font-weight: 300;
+  padding-right: 6px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.selected.suggestions > span, main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories div.suggestions.suggestions > span {
+  background-color: #3f6ff2;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.selected > span, main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories div.suggestions > span {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  border-radius: 16px;
+  padding: 2px 8px 4px 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > input[type=text] {
+  width: 100%;
+  background-color: #1e1f22;
+  border: none;
+  border-radius: 4px;
+  padding: 12px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > input[type=text]:focus {
+  outline: none;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button {
+  height: 32px;
+  min-width: 32px;
+  position: relative;
+  background-color: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4px;
+  transition-duration: 200ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button > img:last-of-type {
+  opacity: 0;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button:hover > img:first-of-type {
+  opacity: 0;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button:hover > img:last-of-type {
+  opacity: 1;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button > img {
+  height: 24px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.value {
+  display: flex;
+  gap: 4px;
+  padding: 0 4px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.value.minutes::after {
+  display: flex;
+  content: "min";
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox] {
+  display: none;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:disabled + span.slider {
+  background-color: #494c52;
+  cursor: no-drop;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:disabled + span.slider::before {
+  background-color: #6f7174;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:disabled + span.slider > img {
+  filter: brightness(0.57);
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider {
+  background-color: #23a55a;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider:before,
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider > img {
+  transform: translateX(16px);
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider > img.unchecked {
+  opacity: 0;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider > img.checked {
+  opacity: 1;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > span.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #80848e;
+  transition: 0.4s;
+  border-radius: 12px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > span.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > span.slider > img {
+  position: absolute;
+  transition: 400ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > span.slider > img::selection {
+  background-color: transparent;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > span.slider > img.unchecked {
+  opacity: 1;
+  transition: 400ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > span.slider > img.checked {
+  opacity: 0;
+  transition: 400ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > input[type=range]#range {
+  height: 6px;
+  width: 100%;
+  background: #4e5058;
+  border-radius: 15px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > input[type=range]#range::-webkit-slider-thumb {
+  height: 24px;
+  width: 10px;
+  background-color: white;
+  border-radius: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label {
+  width: calc(100% - 16px);
+  display: flex;
+  gap: 8px;
+  background-color: #2b2d31;
+  color: #b5bac1;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label:hover {
+  background-color: #393c41;
+  color: white;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label.red {
+  border-left: 4px #f23f43 solid;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label.yellow {
+  border-left: 4px #bf861c solid;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label.green {
+  border-left: 4px #23a55a solid;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label.blue {
+  border-left: 4px #3f6ff2 solid;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label > input[type=radio] {
+  height: 18px;
+  width: 18px;
+  display: grid;
+  place-content: center;
+  border: 2px white solid;
+  border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label > input[type=radio]::before {
+  height: 8px;
+  width: 8px;
+  content: "";
+  background-color: white;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > form.radio > label > input[type=radio]:checked::before {
+  transform: scale(1);
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team {
+  display: flex;
+  gap: 8px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.text-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.text-field > input[type=text] {
+  background-color: #1e1f22;
+  border: none;
+  border-radius: 4px 4px 0 0;
+  padding: 12px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.text-field > input[type=text]:focus {
+  outline: none;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.text-field > div.team-players {
+  display: flex;
+  gap: 4px;
+  background-color: #2b2d31;
+  border-radius: 0 0 4px 4px;
+  padding: 4px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.text-field > div.team-players > div {
+  background-color: #232428;
+  color: gray;
+  text-decoration: underline;
+  border-radius: 16px;
+  padding: 2px 8px 6px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons {
+  width: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button {
+  height: 32px;
+  position: relative;
+  background-color: transparent;
+  color: #949ba4;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4px;
+  transition-duration: 200ms;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button > img:last-of-type {
+  opacity: 0;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button:hover > img:first-of-type {
+  opacity: 0;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button:hover > img:last-of-type {
+  opacity: 1;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button > img {
+  height: 24px;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button {
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 8px;
+  transition-duration: 200ms;
+  cursor: pointer;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button.blue {
+  background-color: #5865f2;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button.blue:hover {
+  background-color: #4752c4;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button.blue:active {
+  background-color: #3c45a5;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button.blue:disabled {
+  background-color: #444c95;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button.gray {
+  background-color: #232428;
+  color: #949ba4;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button.gray:hover {
+  background-color: #111214;
+}
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button.gray:disabled {
+  background-color: #0e0e0f;
 }
 main > div.game > div.main {
   width: calc(100% - 400px);
+}
+main > div.game > div.main > div.top-bar {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  backdrop-filter: brightness(1.5);
+  padding: 12px;
+}
+main > div.game > div.main > div.top-bar > span.close-rules {
+  display: none;
+}
+main > div.game > div.main > div.top-bar > div {
+  display: flex;
+  gap: 8px;
 }
 main > div.game > div.sidebar {
   width: 400px;
   background-color: #313338;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.1) inset;
+  z-index: 1;
 }
 main > div.game > div.sidebar > div:not(div.tabs) {
   display: none;
@@ -133,7 +587,6 @@ main > div.game > div.sidebar > div.chat {
 }
 main > div.game > div.sidebar > div.chat > div.chat-log {
   height: calc(100% - 44px);
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -152,6 +605,7 @@ main > div.game > div.sidebar > div.chat > div.chat-log > div > span.badge {
   border-radius: 4px;
   padding: 0 2px 6px;
   margin-right: 8px;
+  cursor: help;
 }
 main > div.game > div.sidebar > div.chat > div.chat-log > div > span.badge.lobby-leader {
   background-color: rgba(218, 165, 32, 0.3);

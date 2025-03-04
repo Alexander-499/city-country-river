@@ -105,22 +105,7 @@
     }
 
     > button {
-      height: 32px;
       width: 100%;
-      background-color: rgb(255, 56, 56);
-      text-align: center;
-      border: none;
-      border-radius: 16px;
-      cursor: pointer;
-      transition-duration: 200ms;
-
-      &:hover {
-        background-color: rgb(145, 11, 11);
-      }
-
-      &:active {
-        scale: 0.9;
-      }
     }
   }
 }
