@@ -23,7 +23,20 @@ io.on('connection', (socket) => {
   });
 });
 
-const port = process.env.PORT || 3000;
-server.listen(port, () => {
+const express = require('express');
+const path = require('path');
+
+// Serve static files (your frontend)
+app.use(express.static(path.join(__dirname, 'src')));
+
+// Catch-all route to serve your index.html for the root path
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'index.html'));
+});
+
+// Your other routes and Socket.IO setup here...
+
+const port = process.env.PORT || 10000;
+app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
