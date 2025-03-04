@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Alexander499">
+
+  <!-- Tab -->
+  <title>City Country River • Home</title>
+  <link rel="shortcut icon" href="favicon.svg"/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/compiled/general.css">
+  <link rel="stylesheet" href="styles/compiled/header.css">
+  <link rel="stylesheet" href="styles/compiled/main.css">
+  <link rel="stylesheet" href="styles/compiled/create-lobby-overlay.css">
+
+  <!-- Scripts -->
+  <script defer src="scripts/lobby.js"></script>
+  <script defer src="scripts/overlay-toggle.js"></script>
+  <script defer src="scripts/hash.js"></script>
+  <script defer src="scripts/lobby-sidebar.js"></script>
+  <script defer src="scripts/lobby-rules.js"></script>
+  <script defer src="scripts/slider.js"></script>
+  <noscript>Either you have disabled JavaScript or your browser doesn't support it. Get a new Browser (e.g. Google Chrome, Microsoft Edge, Safari, Mozilla Firefox, Opera).</noscript>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <a href onclick="if (window.location.hash.startsWith('#lobby')) { return confirm('Leave this lobby?'); }">City Country River</a>
+      <span onclick="navigator.clipboard.writeText(window.location.hash.slice(-5));" title="Copy lobby link">#lobby/abcde📋</span>
+    </div>
+    <div class="header-center"></div>
+    <div class="header-right">
+      <div class="coins">
+        <div></div>
+        <span>999</span>
+      </div>
+      <div class="profile">
+        <div class="profile-picture"></div>
+        <div class="profile-name">
+          <span>Guest #123</span>
+          <!-- <div>
+            <span>LVL 0</span>
+            <progress max="100"></progress>
+          </div> -->
+        </div>
+      </div>
+      <button class="friends">
+        <img src="assets/images/friends.svg">
+      </button>
+    </div>
+  </header>
+  <main id="app"></main>
+  <div class="create-lobby-overlay" id="createLobbyOverlay">
+    <div>
+      <div class="title">
+        <div></div>
+        <h2>Create Lobby</h2>
+        <button onclick="createLobbyOverlay(0);">
+          <img src="assets/images/close.svg">
+        </button>
+      </div>
+      <input type="text" maxlength="24" placeholder="Lobby name">
+      <div class="lobby-privacy">
+        <input id="lobbyPrivacyPublic" name="lobbyPrivacy" type="radio" value="public" checked>
+        <label for="lobbyPrivacyPublic" >🌎 <span>Public</span></label>
+        <input id="lobbyPrivacyPrivate" name="lobbyPrivacy" type="radio" value="private">
+        <label for="lobbyPrivacyPrivate">🔒 <span>Private</span></label>
+      </div>
+      <button class="round-button" onclick="createLobbyOverlay(0); createLobby()">Create!</button>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDw7pbWV-PchJf8DWdYdCbTeKieQ_Z7HYY",
+      authDomain: "city-country-river-76537.firebaseapp.com",
+      projectId: "city-country-river-76537",
+      storageBucket: "city-country-river-76537.firebasestorage.app",
+      messagingSenderId: "649795621050",
+      appId: "1:649795621050:web:798d0fa4b74ee9ef3f3283",
+      measurementId: "G-JZJKB7W4Y5"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+</body>
+</html>
