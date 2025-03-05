@@ -33,3 +33,40 @@ const port = process.env.PORT || 10000;
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// ! Use .env file from ChatGPT
+require('dotenv').config();
+const admin = require('firebase-admin');
+const serviceAccount = require('./city-country-river-76537-firebase-adminsdk-fbsvc-6241ec8d12.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  }),
+});
+
+const db = admin.firestore();
+
+// ! Join game
+socket.on('joinGame', async (playerName) => {
+  players[socket.id] = playerName;
+  console.log(`${playerName} joined the game`);
+
+  // Store player in Firebase
+  const gameRef = db.collection('games').doc('currentGame');
+  await gameRef.set({ players: Object.values(players) });
+
+  io.emit('updatePlayers', Object.values(players));
+});
+
+socket.on('requestGameState', async () => {
+  const gameRef = db.collection('games').doc('currentGame');
+  const gameDoc = await gameRef.get();
+
+  if (gameDoc.exists) {
+    socket.emit('loadGameState', gameDoc.data());
+  }
+});
+

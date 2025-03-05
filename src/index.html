@@ -100,6 +100,55 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+
+    // Firebase's JavaScript SDK to read and write data from ChatGPT
+    const db = firebase.firestore();
+
+    // Save game state (example)
+    db.collection('gameState').doc('game1').set({
+      score: 10,
+      players: ['player1', 'player2']
+    });
+
+    // Fetch game state
+    db.collection('gameState').doc('game1').get()
+      .then(doc => {
+        console.log(doc.data());
+      });
+
+    // // Socket.IO code from ChatGPT
+    // const socket = io();  // Connect to the server
+
+    // // Send a message to the server
+    // socket.emit('chat message', 'Hello, world!');
+
+    // // Receive messages from the server
+    // socket.on('chat message', (msg) => {
+    //   console.log(msg);
+    //   // Handle chat messages (e.g., append to the chat window)
+    // });
+
   </script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+  
+    function joinGame() {
+      const playerName = prompt("Enter your name:");
+      if (playerName) {
+        socket.emit("joinGame", playerName);
+      }
+    }
+  
+    socket.on("updatePlayers", (players) => {
+      document.getElementById("players").innerText = "Players: " + players.join(", ");
+    });
+  
+    window.onload = joinGame;
+  </script>
+  
+  <h1>Categories Game</h1>
+  <p id="players">Players will appear here...</p>
+  
 </body>
 </html>
