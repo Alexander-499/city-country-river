@@ -74,7 +74,7 @@
         <input id="lobbyPrivacyPrivate" name="lobbyPrivacy" type="radio" value="private">
         <label for="lobbyPrivacyPrivate">🔒 <span>Private</span></label>
       </div>
-      <button class="round-button" onclick="createLobbyOverlay(0); createLobby()">Create!</button>
+      <button id="createLobbyButton" class="round-button" onclick="createLobbyOverlay(0); createLobby()">Create!</button>
     </div>
   </div>
 
@@ -116,39 +116,46 @@
         console.log(doc.data());
       });
 
-    // // Socket.IO code from ChatGPT
-    // const socket = io();  // Connect to the server
-
-    // // Send a message to the server
-    // socket.emit('chat message', 'Hello, world!');
-
-    // // Receive messages from the server
-    // socket.on('chat message', (msg) => {
-    //   console.log(msg);
-    //   // Handle chat messages (e.g., append to the chat window)
-    // });
-
   </script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    const socket = io();
+    // const socket = io();
   
-    function joinGame() {
-      const playerName = prompt("Enter your name:");
-      if (playerName) {
-        socket.emit("joinGame", playerName);
-      }
-    }
+    // function joinGame() {
+    //   const playerName = prompt("Enter your name:");
+    //   if (playerName) {
+    //     socket.emit("joinGame", playerName);
+    //   }
+    // }
   
-    socket.on("updatePlayers", (players) => {
-      document.getElementById("players").innerText = "Players: " + players.join(", ");
+    // socket.on("updatePlayers", (players) => {
+    //   document.getElementById("players").innerText = "Players: " + players.join(", ");
+    // });
+  
+    // window.onload = joinGame;
+
+    document.getElementById("createLobbyButton").addEventListener("click", async () => {
+    // Generate random 5-letter lowercase game code
+    const gameCode = Array.from({length: 5}, () => 
+        String.fromCharCode(97 + Math.floor(Math.random() * 26))
+    ).join("");
+
+    // Store the game in Firebase via the server
+    const response = await fetch("/createGame", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ gameCode })
     });
-  
-    window.onload = joinGame;
+
+    const result = await response.json();
+    if (result.success) {
+        // Redirect to the lobby
+        window.location.hash = `#lobby/${gameCode}`;
+    } else {
+        alert("Failed to create game. Try again.");
+    }
+});
   </script>
-  
-  <h1>Categories Game</h1>
   <p id="players">Players will appear here...</p>
-  
 </body>
 </html>

@@ -354,7 +354,7 @@ main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field 
   opacity: 0;
   transition: 400ms;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > input[type=range]#range {
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > input[type=range] {
   height: 6px;
   width: 100%;
   background: #4e5058;
@@ -364,7 +364,7 @@ main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field 
   -webkit-appearance: none;
   cursor: pointer;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > input[type=range]#range::-webkit-slider-thumb {
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > input[type=range]::-webkit-slider-thumb {
   height: 24px;
   width: 10px;
   background-color: white;

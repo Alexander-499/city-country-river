@@ -17,6 +17,6 @@ function joinLobby() {
   window.location.hash = `#lobby/${combinedValue}`;
 }
 
-function createLobby() {
-  window.location.hash = `#lobby/${'abcde'}`;
-}
+// function createLobby() {
+//   window.location.hash = `#lobby/${'abcde'}`;
+// }
