@@ -63,6 +63,17 @@ socket.on("errorMessage", (message) => {
   alert(message);
 });
 
+function updatePlayerList(players) {
+  const playerList = document.getElementById("playerList");
+  if (!playerList) return;
+
+  playerList.innerHTML = players
+    .map(({ name, isOperator }) =>
+      `<li>${name} ${isOperator ? "(Operator)" : ""}</li>`
+    )
+    .join("");
+}
+
 // Fixes dynamically injected elements
 document.body.addEventListener("DOMNodeInserted", function () {
   const playerList = document.getElementById("playerList");
