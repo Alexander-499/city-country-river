@@ -6,7 +6,7 @@ require('dotenv').config();
 const admin = require('firebase-admin');
 
 if (!process.env.FIREBASE_CONFIG) {
-  throw new Error("Missing FIREBASE_CONFIG environment variable");
+    throw new Error("Missing FIREBASE_CONFIG environment variable");
 }
 
 // Decode Base64 JSON and initialize Firebase Admin
@@ -14,113 +14,121 @@ const firebaseConfigJson = Buffer.from(process.env.FIREBASE_CONFIG, 'base64').to
 const firebaseConfig = JSON.parse(firebaseConfigJson);
 
 admin.initializeApp({
-  credential: admin.credential.cert(firebaseConfig)
+    credential: admin.credential.cert(firebaseConfig)
 });
 
 const db = admin.firestore();
+const players = {}; // Stores player data in memory
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
 app.use(express.static(path.join(__dirname, 'src')));
-app.use(express.json()); // For parsing JSON bodies
+app.use(express.json()); // Middleware for JSON parsing
 
-// ─── HTTP ENDPOINT TO CREATE A LOBBY ──────────────────────────────────────────
+// 🔥 **Create a Game Lobby**
 app.post('/createGame', async (req, res) => {
-  const { gameCode, playerName } = req.body;
-  if (!gameCode || !playerName) {
-    return res.status(400).json({ success: false, message: "Missing parameters" });
-  }
+    const { gameCode, playerName } = req.body;
+    if (!gameCode || !playerName) return res.status(400).json({ success: false, message: "Missing parameters" });
 
-  const gameRef = db.collection('games').doc(gameCode);
-  // Create the lobby with the operator – socketId remains null until they join via socket.
-  await gameRef.set({
-    players: [{ name: playerName, socketId: null, isOperator: true }],
-    createdAt: admin.firestore.FieldValue.serverTimestamp()
-  });
+    const gameRef = db.collection('games').doc(gameCode);
+    await gameRef.set({
+        players: [{ name: playerName, socketId: null, isOperator: true }],
+        createdAt: admin.firestore.FieldValue.serverTimestamp()
+    });
 
-  res.json({ success: true });
+    res.json({ success: true });
 });
 
-// ─── SOCKET.IO HANDLING ─────────────────────────────────────────────────────────
+// 🔥 **Socket.IO Game Logic**
 io.on('connection', (socket) => {
-  console.log(`User connected: ${socket.id}`);
+    console.log(`User connected: ${socket.id}`);
 
-  // When a client joins a game lobby, they call joinGame.
-  socket.on('joinGame', async ({ gameCode, playerName }) => {
-    const gameRef = db.collection('games').doc(gameCode);
-    const gameDoc = await gameRef.get();
+    // 📌 **Player Joins a Lobby**
+    socket.on('joinGame', async ({ gameCode, playerName }) => {
+        const gameRef = db.collection('games').doc(gameCode);
+        const gameDoc = await gameRef.get();
 
-    if (!gameDoc.exists) {
-      return socket.emit('errorMessage', 'Game not found.');
-    }
+        if (!gameDoc.exists) {
+            return socket.emit('errorMessage', "Game not found!");
+        }
 
-    let gameData = gameDoc.data();
+        let gameData = gameDoc.data();
 
-    // Check if a player with this name already exists
-    const duplicate = gameData.players.find(p => p.name === playerName);
+        // 🔥 **Check if player already exists**
+        let existingPlayer = gameData.players.find(p => p.name === playerName);
+        if (existingPlayer) {
+            return socket.emit('errorMessage', "Name already taken! Choose a different one.");
+        }
 
-    if (duplicate) {
-      // If the player exists but their socketId is null (i.e. operator who created lobby), update it now.
-      if (!duplicate.socketId) {
-        duplicate.socketId = socket.id;
-      } else {
-        // If the player already has a socketId, then reject duplicate names.
-        return socket.emit('errorMessage', 'Name already taken! Choose a different one.');
-      }
-    } else {
-      // Add the new player
-      gameData.players.push({ name: playerName, socketId: socket.id, isOperator: false });
-    }
+        // Add player to the game
+        let newPlayer = { name: playerName, socketId: socket.id, isOperator: gameData.players.length === 0 };
+        gameData.players.push(newPlayer);
+        await gameRef.update({ players: gameData.players });
 
-    // Update the game in Firestore
-    await gameRef.update({ players: gameData.players });
+        players[socket.id] = { gameCode, playerName };
+        socket.join(gameCode);
 
-    // Let the socket join a room named with the gameCode
-    socket.join(gameCode);
+        console.log(`${playerName} joined game ${gameCode}`);
+        io.to(gameCode).emit('updatePlayers', gameData.players);
+    });
 
-    // Save the player's game info for later (like disconnect)
-    socket.data = { gameCode, playerName };
+    // 📌 **Player Disconnects**
+    socket.on('disconnect', async () => {
+        if (!players[socket.id]) return;
 
-    // Fetch updated data to ensure consistency and emit updated player list
-    const updatedGameDoc = await gameRef.get();
-    const updatedPlayers = updatedGameDoc.data().players;
-    io.to(gameCode).emit('updatePlayers', updatedPlayers);
-  });
+        const { gameCode, playerName } = players[socket.id];
+        delete players[socket.id];
 
-  // Handle disconnect event
-  socket.on('disconnect', async () => {
-    if (!socket.data) return; // The socket never joined a game
+        const gameRef = db.collection('games').doc(gameCode);
+        const gameDoc = await gameRef.get();
 
-    const { gameCode } = socket.data;
-    const gameRef = db.collection('games').doc(gameCode);
-    const gameDoc = await gameRef.get();
-    if (!gameDoc.exists) return;
+        if (!gameDoc.exists) return;
 
-    let gameData = gameDoc.data();
+        let gameData = gameDoc.data();
+        gameData.players = gameData.players.filter(player => player.socketId !== socket.id);
 
-    // Remove this player based on socket id
-    gameData.players = gameData.players.filter(p => p.socketId !== socket.id);
+        // 🔥 **Delete game if no players are left**
+        if (gameData.players.length === 0) {
+            await gameRef.delete();
+            console.log(`Game ${gameCode} deleted`);
+        } else {
+            await gameRef.update({ players: gameData.players });
+            io.to(gameCode).emit('updatePlayers', gameData.players);
+        }
+    });
 
-    if (gameData.players.length === 0) {
-      // Delete the game if no players remain
-      await gameRef.delete();
-      console.log(`Game ${gameCode} deleted as no players remain.`);
-    } else {
-      await gameRef.update({ players: gameData.players });
-      io.to(gameCode).emit('updatePlayers', gameData.players);
-    }
-  });
+    // 📌 **Player Leaves a Game (optional)**
+    socket.on('leaveGame', async ({ gameCode, playerName }) => {
+        const gameRef = db.collection('games').doc(gameCode);
+        const gameDoc = await gameRef.get();
+
+        if (!gameDoc.exists) return;
+
+        let gameData = gameDoc.data();
+        gameData.players = gameData.players.filter(player => player.name !== playerName);
+
+        // 🔥 **Delete game if empty**
+        if (gameData.players.length === 0) {
+            await gameRef.delete();
+            console.log(`Game ${gameCode} deleted`);
+        } else {
+            await gameRef.update({ players: gameData.players });
+            io.to(gameCode).emit('updatePlayers', gameData.players);
+        }
+
+        socket.leave(gameCode);
+    });
 });
 
-// ─── SERVE THE INDEX.HTML ──────────────────────────────────────────────────────
+// Serve index.html for the root path
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'index.html'));
+    res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
-// ─── START THE SERVER ───────────────────────────────────────────────────────────
+// Start server
 const port = process.env.PORT || 10000;
 server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });
