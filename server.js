@@ -73,19 +73,19 @@ app.use(express.json()); // Middleware for JSON parsing
 
 // Create a new game
 app.post("/createGame", async (req, res) => {
-  const { gameCode } = req.body;
+  const { gameCode, playerName } = req.body;
 
-  if (!gameCode || gameCode.length !== 5) {
-    return res.status(400).json({ success: false, message: "Invalid game code." });
+  if (!gameCode || !playerName) {
+    return res.status(400).json({ success: false, message: "Invalid data." });
   }
 
   const gameRef = db.collection("games").doc(gameCode);
-  await gameRef.set({ players: [], createdAt: new Date() });
+  await gameRef.set({ players: [playerName], createdAt: new Date() });
 
   res.json({ success: true, gameCode });
 });
 
-// When a player joins a game
+// Handle WebSocket connections
 io.on("connection", (socket) => {
   socket.on("joinGame", async ({ gameCode, playerName }) => {
     const gameRef = db.collection("games").doc(gameCode);
@@ -96,8 +96,10 @@ io.on("connection", (socket) => {
     }
 
     const gameData = gameDoc.data();
-    gameData.players.push(playerName);
-    await gameRef.update({ players: gameData.players });
+    if (!gameData.players.includes(playerName)) {
+      gameData.players.push(playerName);
+      await gameRef.update({ players: gameData.players });
+    }
 
     socket.join(gameCode);
     io.to(gameCode).emit("updatePlayers", gameData.players);

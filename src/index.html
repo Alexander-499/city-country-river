@@ -58,6 +58,7 @@
     </div>
   </header>
   <main id="app"></main>
+  <div id="playerList"></div>
   <div class="create-lobby-overlay" id="createLobbyOverlay">
     <div>
       <div class="title">
@@ -119,42 +120,58 @@
   </script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    // const socket = io();
-  
-    // function joinGame() {
-    //   const playerName = prompt("Enter your name:");
-    //   if (playerName) {
-    //     socket.emit("joinGame", playerName);
-    //   }
-    // }
-  
-    // socket.on("updatePlayers", (players) => {
-    //   document.getElementById("players").innerText = "Players: " + players.join(", ");
-    // });
-  
-    // window.onload = joinGame;
+    const socket = io();
 
+    // Create Game
     document.getElementById("createLobbyButton").addEventListener("click", async () => {
-    // Generate random 5-letter lowercase game code
-    const gameCode = Array.from({length: 5}, () => 
-        String.fromCharCode(97 + Math.floor(Math.random() * 26))
-    ).join("");
+        const playerName = prompt("Enter your name:");
 
-    // Store the game in Firebase via the server
-    const response = await fetch("/createGame", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ gameCode })
+        if (!playerName) return alert("You need to enter a name!");
+
+        // Generate random 5-letter lowercase game code
+        const gameCode = Array.from({ length: 5 }, () =>
+            String.fromCharCode(97 + Math.floor(Math.random() * 26))
+        ).join("");
+
+        // Store the game in Firebase via the server
+        const response = await fetch("/createGame", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ gameCode, playerName })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            // Redirect to the game lobby
+            window.location.hash = `#lobby/${gameCode}`;
+        } else {
+            alert("Failed to create game. Try again.");
+        }
     });
 
-    const result = await response.json();
-    if (result.success) {
-        // Redirect to the lobby
-        window.location.hash = `#lobby/${gameCode}`;
-    } else {
-        alert("Failed to create game. Try again.");
+    // Join Game when opening a lobby URL
+    async function joinGameFromURL() {
+        const hash = window.location.hash;
+        if (!hash.startsWith("#lobby/")) return;
+
+        const gameCode = hash.split("/")[1];
+        const playerName = prompt("Enter your name to join:");
+
+        if (!playerName) return alert("You need to enter a name!");
+
+        // Tell the server to join the game
+        socket.emit("joinGame", { gameCode, playerName });
     }
-});
+
+    // Update player list
+    socket.on("updatePlayers", (players) => {
+        const playerList = document.getElementById("playerList");
+        playerList.innerHTML = players.map(name => `<li>${name}</li>`).join("");
+    });
+
+    // Check if the user is joining a game from the URL
+    window.addEventListener("load", joinGameFromURL);
+
   </script>
   <p id="players">Players will appear here...</p>
 </body>
