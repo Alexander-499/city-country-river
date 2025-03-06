@@ -4,8 +4,7 @@ City Country River is an open source online party game similar to [Categories (g
 
 ## Release
 
-The game is still in early development and I don't know anything about servers and backend so it will still take a lot of time. I'm trying my best to get it done quickly
+The game is still in early development and I don't know anything about servers and backend so it will still take a lot of time. I'm trying my best to get it done quickly. <br> Update 06/03/25: Setting up the server and database was very easy, but making the lobby system is really hard.
 
 ### Website URL
-
 I haven't even bought a domain yet, but I will. I will probably get a domain for me, and a sub-site of it will be the game.
