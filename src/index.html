@@ -121,7 +121,7 @@
   <script>
     const socket = io();
 
-    document.getElementById("createGameBtn").addEventListener("click", async () => {
+    document.getElementById("createLobbyButton").addEventListener("click", async () => {
         const playerName = prompt("Enter your name:");
         if (!playerName) return alert("You need to enter a name!");
 
