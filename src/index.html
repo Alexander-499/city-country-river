@@ -122,7 +122,7 @@
     const socket = io();
 
     // Create Game
-    document.getElementById("createLobbyButton").addEventListener("click", async () => {
+    document.getElementById("createGameBtn").addEventListener("click", async () => {
         const playerName = prompt("Enter your name:");
         if (!playerName) return alert("You need to enter a name!");
 
@@ -162,26 +162,26 @@
 
     // Handle player updates
     socket.on("updatePlayers", (players) => {
-        waitForElement("#playerList", (playerList) => {
-            playerList.innerHTML = players
-                .map(({ name, isOperator }) =>
-                    `<li>${name} ${isOperator ? "(Operator)" : ""}</li>`
-                )
-                .join("");
-        });
+        updatePlayerList(players);
     });
 
-    // Function to wait for elements injected later
-    function waitForElement(selector, callback) {
-        const observer = new MutationObserver(() => {
-            const element = document.querySelector(selector);
-            if (element) {
-                observer.disconnect();
-                callback(element);
-            }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
+    // Function to update player list (fixing missing elements issue)
+    function updatePlayerList(players) {
+        const playerList = document.getElementById("playerList");
+        if (!playerList) return;
+
+        playerList.innerHTML = players
+            .map(({ name, isOperator }) =>
+                `<li>${name} ${isOperator ? "(Operator)" : ""}</li>`
+            )
+            .join("");
     }
+
+    // Detect when #playerList gets added dynamically
+    document.body.addEventListener("DOMNodeInserted", function () {
+        const playerList = document.getElementById("playerList");
+        if (playerList) updatePlayerList([]); // Ensure it updates
+    });
 
     // Check if the user is joining a game from the URL
     window.addEventListener("load", joinGameFromURL);
