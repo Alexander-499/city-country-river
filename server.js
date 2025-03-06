@@ -43,7 +43,7 @@ app.post('/createGame', async (req, res) => {
 
 // 🔥 **Socket.IO Game Logic**
 io.on('connection', (socket) => {
-    console.log('A user connected:', socket.id);
+    console.log(`User connected: ${socket.id}`);
 
     // 📌 **Player Joins a Lobby**
     socket.on('joinGame', async ({ gameCode, playerName }) => {
@@ -56,19 +56,21 @@ io.on('connection', (socket) => {
 
         let gameData = gameDoc.data();
 
-        // 🔥 **Prevent duplicate names**
+        // 🔥 **Check if player already exists**
         let existingPlayer = gameData.players.find(p => p.name === playerName);
         if (existingPlayer) {
             return socket.emit('errorMessage', "Name already taken! Choose a different one.");
         }
 
         // Add player to the game
-        gameData.players.push({ name: playerName, socketId: socket.id, isOperator: false });
+        let newPlayer = { name: playerName, socketId: socket.id, isOperator: gameData.players.length === 0 };
+        gameData.players.push(newPlayer);
         await gameRef.update({ players: gameData.players });
 
         players[socket.id] = { gameCode, playerName };
         socket.join(gameCode);
 
+        console.log(`${playerName} joined game ${gameCode}`);
         io.to(gameCode).emit('updatePlayers', gameData.players);
     });
 
@@ -95,6 +97,28 @@ io.on('connection', (socket) => {
             await gameRef.update({ players: gameData.players });
             io.to(gameCode).emit('updatePlayers', gameData.players);
         }
+    });
+
+    // 📌 **Player Leaves a Game (optional)**
+    socket.on('leaveGame', async ({ gameCode, playerName }) => {
+        const gameRef = db.collection('games').doc(gameCode);
+        const gameDoc = await gameRef.get();
+
+        if (!gameDoc.exists) return;
+
+        let gameData = gameDoc.data();
+        gameData.players = gameData.players.filter(player => player.name !== playerName);
+
+        // 🔥 **Delete game if empty**
+        if (gameData.players.length === 0) {
+            await gameRef.delete();
+            console.log(`Game ${gameCode} deleted`);
+        } else {
+            await gameRef.update({ players: gameData.players });
+            io.to(gameCode).emit('updatePlayers', gameData.players);
+        }
+
+        socket.leave(gameCode);
     });
 });
 
