@@ -6,7 +6,7 @@ require('dotenv').config();
 const admin = require('firebase-admin');
 
 if (!process.env.FIREBASE_CONFIG) {
-  throw new Error("Missing FIREBASE_CONFIG environment variable");
+    throw new Error("Missing FIREBASE_CONFIG environment variable");
 }
 
 // Decode Base64 JSON and initialize Firebase Admin
@@ -14,118 +14,97 @@ const firebaseConfigJson = Buffer.from(process.env.FIREBASE_CONFIG, 'base64').to
 const firebaseConfig = JSON.parse(firebaseConfigJson);
 
 admin.initializeApp({
-  credential: admin.credential.cert(firebaseConfig)
+    credential: admin.credential.cert(firebaseConfig)
 });
 
 const db = admin.firestore();
-const players = {};
+const players = {}; // Stores player data in memory
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-// Serve static files from the 'src' folder
 app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.json()); // Middleware for JSON parsing
 
-// Handle WebSocket connections
+// 🔥 **Create a Game Lobby**
+app.post('/createGame', async (req, res) => {
+    const { gameCode, playerName } = req.body;
+    if (!gameCode || !playerName) return res.status(400).json({ success: false, message: "Missing parameters" });
+
+    const gameRef = db.collection('games').doc(gameCode);
+    await gameRef.set({
+        players: [{ name: playerName, socketId: null, isOperator: true }],
+        createdAt: admin.firestore.FieldValue.serverTimestamp()
+    });
+
+    res.json({ success: true });
+});
+
+// 🔥 **Socket.IO Game Logic**
 io.on('connection', (socket) => {
-  console.log('A user connected');
+    console.log('A user connected:', socket.id);
 
-  socket.on('joinGame', async (playerName) => {
-    players[socket.id] = playerName;
-    console.log(`${playerName} joined the game`);
+    // 📌 **Player Joins a Lobby**
+    socket.on('joinGame', async ({ gameCode, playerName }) => {
+        const gameRef = db.collection('games').doc(gameCode);
+        const gameDoc = await gameRef.get();
 
-    // Store player in Firebase
-    const gameRef = db.collection('games').doc('currentGame');
-    await gameRef.set({ players: Object.values(players) });
+        if (!gameDoc.exists) {
+            return socket.emit('errorMessage', "Game not found!");
+        }
 
-    io.emit('updatePlayers', Object.values(players));
-  });
+        let gameData = gameDoc.data();
 
-  socket.on('requestGameState', async () => {
-    const gameRef = db.collection('games').doc('currentGame');
-    const gameDoc = await gameRef.get();
+        // 🔥 **Prevent duplicate names**
+        let existingPlayer = gameData.players.find(p => p.name === playerName);
+        if (existingPlayer) {
+            return socket.emit('errorMessage', "Name already taken! Choose a different one.");
+        }
 
-    if (gameDoc.exists) {
-      socket.emit('loadGameState', gameDoc.data());
-    }
-  });
+        // Add player to the game
+        gameData.players.push({ name: playerName, socketId: socket.id, isOperator: false });
+        await gameRef.update({ players: gameData.players });
 
-  socket.on('disconnect', () => {
-    console.log('User disconnected');
-    delete players[socket.id]; // Remove player on disconnect
-  });
+        players[socket.id] = { gameCode, playerName };
+        socket.join(gameCode);
+
+        io.to(gameCode).emit('updatePlayers', gameData.players);
+    });
+
+    // 📌 **Player Disconnects**
+    socket.on('disconnect', async () => {
+        if (!players[socket.id]) return;
+
+        const { gameCode, playerName } = players[socket.id];
+        delete players[socket.id];
+
+        const gameRef = db.collection('games').doc(gameCode);
+        const gameDoc = await gameRef.get();
+
+        if (!gameDoc.exists) return;
+
+        let gameData = gameDoc.data();
+        gameData.players = gameData.players.filter(player => player.socketId !== socket.id);
+
+        // 🔥 **Delete game if no players are left**
+        if (gameData.players.length === 0) {
+            await gameRef.delete();
+            console.log(`Game ${gameCode} deleted`);
+        } else {
+            await gameRef.update({ players: gameData.players });
+            io.to(gameCode).emit('updatePlayers', gameData.players);
+        }
+    });
 });
 
 // Serve index.html for the root path
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'index.html'));
+    res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
 // Start server
 const port = process.env.PORT || 10000;
 server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
-// ! Lobby stuff
-app.use(express.json()); // Middleware for JSON parsing
-
-// Create a new game
-app.post("/createGame", async (req, res) => {
-    const { gameCode, playerName } = req.body;
-    if (!gameCode || !playerName) {
-        return res.status(400).json({ success: false, message: "Invalid data." });
-    }
-
-    const gameRef = db.collection("games").doc(gameCode);
-    await gameRef.set({
-        players: [{ name: playerName, isOperator: true }],
-        createdAt: new Date()
-    });
-
-    res.json({ success: true, gameCode });
-});
-
-// Handle WebSocket connections
-io.on("connection", (socket) => {
-    socket.on("joinGame", async ({ gameCode, playerName }) => {
-        const gameRef = db.collection("games").doc(gameCode);
-        const gameDoc = await gameRef.get();
-
-        if (!gameDoc.exists) {
-            return socket.emit("error", "Game not found.");
-        }
-
-        const gameData = gameDoc.data();
-        if (!gameData.players.some(p => p.name === playerName)) {
-            gameData.players.push({ name: playerName, isOperator: false });
-            await gameRef.update({ players: gameData.players });
-        }
-
-        socket.join(gameCode);
-        io.to(gameCode).emit("updatePlayers", gameData.players);
-    });
-
-    socket.on("disconnect", async () => {
-        // Find the game the player was in
-        const gamesSnapshot = await db.collection("games").get();
-        let updatedPlayers = [];
-        let gameCodeToDelete = null;
-
-        gamesSnapshot.forEach(async (doc) => {
-            const gameData = doc.data();
-            updatedPlayers = gameData.players.filter(p => p.socketId !== socket.id);
-
-            if (updatedPlayers.length === 0) {
-                gameCodeToDelete = doc.id;
-            } else {
-                await db.collection("games").doc(doc.id).update({ players: updatedPlayers });
-            }
-        });
-
-        if (gameCodeToDelete) {
-            await db.collection("games").doc(gameCodeToDelete).delete();
-        }
-    });
+    console.log(`Server running on port ${port}`);
 });

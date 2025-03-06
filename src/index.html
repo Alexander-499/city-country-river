@@ -121,17 +121,14 @@
   <script>
     const socket = io();
 
-    // Create Game
-    document.getElementById("createLobbyButton").addEventListener("click", async () => {
+    document.getElementById("createGameBtn").addEventListener("click", async () => {
         const playerName = prompt("Enter your name:");
         if (!playerName) return alert("You need to enter a name!");
 
-        // Generate random 5-letter lowercase game code
         const gameCode = Array.from({ length: 5 }, () =>
             String.fromCharCode(97 + Math.floor(Math.random() * 26))
         ).join("");
 
-        // Store the game in Firebase
         const response = await fetch("/createGame", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -140,50 +137,39 @@
 
         const result = await response.json();
         if (result.success) {
-            // Redirect to the game lobby
             window.location.hash = `#lobby/${gameCode}`;
         } else {
-            alert("Failed to create game. Try again.");
+            alert("Failed to create game.");
         }
     });
 
-    // Join Game when opening a lobby URL
+    // ✅ **Join Game from URL**
     async function joinGameFromURL() {
         const hash = window.location.hash;
         if (!hash.startsWith("#lobby/")) return;
 
         const gameCode = hash.split("/")[1];
-        const playerName = prompt("Enter your name to join:");
+        const playerName = prompt("Enter your name:");
         if (!playerName) return alert("You need to enter a name!");
 
-        // Tell the server to join the game
         socket.emit("joinGame", { gameCode, playerName });
     }
 
-    // Handle player updates
     socket.on("updatePlayers", (players) => {
         updatePlayerList(players);
     });
 
-    // Function to update player list (fixing missing elements issue)
-    function updatePlayerList(players) {
-        const playerList = document.getElementById("playerList");
-        if (!playerList) return;
-
-        playerList.innerHTML = players
-            .map(({ name, isOperator }) =>
-                `<li>${name} ${isOperator ? "(Operator)" : ""}</li>`
-            )
-            .join("");
-    }
-
-    // Detect when #playerList gets added dynamically
-    document.body.addEventListener("DOMNodeInserted", function () {
-        const playerList = document.getElementById("playerList");
-        if (playerList) updatePlayerList([]); // Ensure it updates
+    socket.on("errorMessage", (message) => {
+        alert(message);
     });
 
-    // Check if the user is joining a game from the URL
+    // ✅ **Fix for dynamically injected elements**
+    document.body.addEventListener("DOMNodeInserted", function () {
+        const playerList = document.getElementById("playerList");
+        if (playerList) updatePlayerList([]);
+    });
+
+    // ✅ **Make sure to handle game join on page load**
     window.addEventListener("load", joinGameFromURL);
   </script>
 </body>
