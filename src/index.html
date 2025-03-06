@@ -28,6 +28,8 @@
   <script defer src="scripts/lobby-sidebar.js"></script>
   <script defer src="scripts/lobby-rules.js"></script>
   <script defer src="scripts/slider.js"></script>
+  <script defer type="module" src="scripts/firebase.js"></script>
+  <script defer src="/socket.io/socket.io.js"></script>
   <noscript>Either you have disabled JavaScript or your browser doesn't support it. Get a new Browser (e.g. Google Chrome, Microsoft Edge, Safari, Mozilla Firefox, Opera).</noscript>
 </head>
 <body>
@@ -38,34 +40,30 @@
     </div>
     <div class="header-center"></div>
     <div class="header-right">
-      <div class="coins">
+      <!-- <div class="coins">
         <div></div>
-        <span>999</span>
-      </div>
+        <span>0</span>
+      </div> -->
       <div class="profile">
         <div class="profile-picture"></div>
         <div class="profile-name">
-          <span>Guest #123</span>
+          <span>Profiles are not<br>available yet</span>
           <!-- <div>
             <span>LVL 0</span>
             <progress max="100"></progress>
           </div> -->
         </div>
       </div>
-      <button class="friends">
-        <img src="assets/images/friends.svg">
-      </button>
+      <button class="friends"><img src="assets/images/friends.svg"></button>
     </div>
   </header>
   <main id="app"></main>
-  <div class="create-lobby-overlay" id="createLobbyOverlay">
+  <div id="createLobbyOverlay" class="create-lobby-overlay">
     <div>
       <div class="title">
         <div></div>
         <h2>Create Lobby</h2>
-        <button onclick="createLobbyOverlay(0);">
-          <img src="assets/images/close.svg">
-        </button>
+        <button onclick="createLobbyOverlay(0);"><img src="assets/images/close.svg"></button>
       </div>
       <input type="text" maxlength="24" placeholder="Lobby name">
       <div class="lobby-privacy">
@@ -77,100 +75,5 @@
       <button id="createLobbyButton" class="round-button" onclick="createLobbyOverlay(0); createLobby()">Create!</button>
     </div>
   </div>
-
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "firebase/app";
-    import { getAnalytics } from "firebase/analytics";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyDw7pbWV-PchJf8DWdYdCbTeKieQ_Z7HYY",
-      authDomain: "city-country-river-76537.firebaseapp.com",
-      projectId: "city-country-river-76537",
-      storageBucket: "city-country-river-76537.firebasestorage.app",
-      messagingSenderId: "649795621050",
-      appId: "1:649795621050:web:798d0fa4b74ee9ef3f3283",
-      measurementId: "G-JZJKB7W4Y5"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-
-    // Firebase's JavaScript SDK to read and write data from ChatGPT
-    const db = firebase.firestore();
-
-    // Save game state (example)
-    db.collection('gameState').doc('game1').set({
-      score: 10,
-      players: ['player1', 'player2']
-    });
-
-    // Fetch game state
-    db.collection('gameState').doc('game1').get()
-      .then(doc => {
-        console.log(doc.data());
-      });
-
-  </script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-
-    document.getElementById("createLobbyButton").addEventListener("click", async () => {
-        const playerName = prompt("Enter your name:");
-        if (!playerName) return alert("You need to enter a name!");
-
-        const gameCode = Array.from({ length: 5 }, () =>
-            String.fromCharCode(97 + Math.floor(Math.random() * 26))
-        ).join("");
-
-        const response = await fetch("/createGame", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ gameCode, playerName })
-        });
-
-        const result = await response.json();
-        if (result.success) {
-            window.location.hash = `#lobby/${gameCode}`;
-        } else {
-            alert("Failed to create game.");
-        }
-    });
-
-    // ✅ **Join Game from URL**
-    async function joinGameFromURL() {
-        const hash = window.location.hash;
-        if (!hash.startsWith("#lobby/")) return;
-
-        const gameCode = hash.split("/")[1];
-        const playerName = prompt("Enter your name:");
-        if (!playerName) return alert("You need to enter a name!");
-
-        socket.emit("joinGame", { gameCode, playerName });
-    }
-
-    socket.on("updatePlayers", (players) => {
-        updatePlayerList(players);
-    });
-
-    socket.on("errorMessage", (message) => {
-        alert(message);
-    });
-
-    // ✅ **Fix for dynamically injected elements**
-    document.body.addEventListener("DOMNodeInserted", function () {
-        const playerList = document.getElementById("playerList");
-        if (playerList) updatePlayerList([]);
-    });
-
-    // ✅ **Make sure to handle game join on page load**
-    window.addEventListener("load", joinGameFromURL);
-  </script>
 </body>
 </html>
