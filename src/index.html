@@ -58,7 +58,6 @@
     </div>
   </header>
   <main id="app"></main>
-  <div id="playerList"></div>
   <div class="create-lobby-overlay" id="createLobbyOverlay">
     <div>
       <div class="title">
@@ -125,7 +124,6 @@
     // Create Game
     document.getElementById("createLobbyButton").addEventListener("click", async () => {
         const playerName = prompt("Enter your name:");
-
         if (!playerName) return alert("You need to enter a name!");
 
         // Generate random 5-letter lowercase game code
@@ -133,7 +131,7 @@
             String.fromCharCode(97 + Math.floor(Math.random() * 26))
         ).join("");
 
-        // Store the game in Firebase via the server
+        // Store the game in Firebase
         const response = await fetch("/createGame", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -156,23 +154,37 @@
 
         const gameCode = hash.split("/")[1];
         const playerName = prompt("Enter your name to join:");
-
         if (!playerName) return alert("You need to enter a name!");
 
         // Tell the server to join the game
         socket.emit("joinGame", { gameCode, playerName });
     }
 
-    // Update player list
+    // Handle player updates
     socket.on("updatePlayers", (players) => {
-        const playerList = document.getElementById("playerList");
-        playerList.innerHTML = players.map(name => `<li>${name}</li>`).join("");
+        waitForElement("#playerList", (playerList) => {
+            playerList.innerHTML = players
+                .map(({ name, isOperator }) =>
+                    `<li>${name} ${isOperator ? "(Operator)" : ""}</li>`
+                )
+                .join("");
+        });
     });
+
+    // Function to wait for elements injected later
+    function waitForElement(selector, callback) {
+        const observer = new MutationObserver(() => {
+            const element = document.querySelector(selector);
+            if (element) {
+                observer.disconnect();
+                callback(element);
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
 
     // Check if the user is joining a game from the URL
     window.addEventListener("load", joinGameFromURL);
-
   </script>
-  <p id="players">Players will appear here...</p>
 </body>
 </html>

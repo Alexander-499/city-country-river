@@ -73,35 +73,59 @@ app.use(express.json()); // Middleware for JSON parsing
 
 // Create a new game
 app.post("/createGame", async (req, res) => {
-  const { gameCode, playerName } = req.body;
+    const { gameCode, playerName } = req.body;
+    if (!gameCode || !playerName) {
+        return res.status(400).json({ success: false, message: "Invalid data." });
+    }
 
-  if (!gameCode || !playerName) {
-    return res.status(400).json({ success: false, message: "Invalid data." });
-  }
+    const gameRef = db.collection("games").doc(gameCode);
+    await gameRef.set({
+        players: [{ name: playerName, isOperator: true }],
+        createdAt: new Date()
+    });
 
-  const gameRef = db.collection("games").doc(gameCode);
-  await gameRef.set({ players: [playerName], createdAt: new Date() });
-
-  res.json({ success: true, gameCode });
+    res.json({ success: true, gameCode });
 });
 
 // Handle WebSocket connections
 io.on("connection", (socket) => {
-  socket.on("joinGame", async ({ gameCode, playerName }) => {
-    const gameRef = db.collection("games").doc(gameCode);
-    const gameDoc = await gameRef.get();
+    socket.on("joinGame", async ({ gameCode, playerName }) => {
+        const gameRef = db.collection("games").doc(gameCode);
+        const gameDoc = await gameRef.get();
 
-    if (!gameDoc.exists) {
-      return socket.emit("error", "Game not found.");
-    }
+        if (!gameDoc.exists) {
+            return socket.emit("error", "Game not found.");
+        }
 
-    const gameData = gameDoc.data();
-    if (!gameData.players.includes(playerName)) {
-      gameData.players.push(playerName);
-      await gameRef.update({ players: gameData.players });
-    }
+        const gameData = gameDoc.data();
+        if (!gameData.players.some(p => p.name === playerName)) {
+            gameData.players.push({ name: playerName, isOperator: false });
+            await gameRef.update({ players: gameData.players });
+        }
 
-    socket.join(gameCode);
-    io.to(gameCode).emit("updatePlayers", gameData.players);
-  });
+        socket.join(gameCode);
+        io.to(gameCode).emit("updatePlayers", gameData.players);
+    });
+
+    socket.on("disconnect", async () => {
+        // Find the game the player was in
+        const gamesSnapshot = await db.collection("games").get();
+        let updatedPlayers = [];
+        let gameCodeToDelete = null;
+
+        gamesSnapshot.forEach(async (doc) => {
+            const gameData = doc.data();
+            updatedPlayers = gameData.players.filter(p => p.socketId !== socket.id);
+
+            if (updatedPlayers.length === 0) {
+                gameCodeToDelete = doc.id;
+            } else {
+                await db.collection("games").doc(doc.id).update({ players: updatedPlayers });
+            }
+        });
+
+        if (gameCodeToDelete) {
+            await db.collection("games").doc(gameCodeToDelete).delete();
+        }
+    });
 });
