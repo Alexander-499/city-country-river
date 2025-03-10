@@ -85,6 +85,7 @@ window.addEventListener("load", joinGameFromURL);
 
 // let game = {
 //   "name": "Alexander499's Lobby",
+//   "dateCreated": "",
 //   "private": true,
 //   "rules": {
 //     "categories": [
