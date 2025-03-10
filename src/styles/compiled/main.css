@@ -11,7 +11,7 @@ main > div.home {
   justify-content: center;
 }
 main > div.home > section.play-section {
-  height: calc(100vh - 64px);
+  height: max(100vh - 64px, 480px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,11 +19,43 @@ main > div.home > section.play-section {
 }
 main > div.home > section.play-section > div.play-section-center {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+main > div.home > section.play-section > div.play-section-center > div.name {
+  width: 100%;
+}
+main > div.home > section.play-section > div.play-section-center > div.name > div {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+}
+main > div.home > section.play-section > div.play-section-center > div.name > div > input[type=text] {
+  height: 40px;
+  width: calc(100% - 16px);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px) brightness(1.1);
+  border: 1px rgba(255, 255, 255, 0.3) solid;
+  border-radius: 8px;
+  padding: 0 8px;
+}
+main > div.home > section.play-section > div.play-section-center > div.name > div > input[type=text]:focus {
+  outline: none;
+}
+main > div.home > section.play-section > div.play-section-center > div.play {
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
 }
-main > div.home > section.play-section > div.play-section-center > div {
+@media (max-width: 720px) {
+  main > div.home > section.play-section > div.play-section-center > div.play {
+    flex-direction: column;
+  }
+}
+main > div.home > section.play-section > div.play-section-center > div.play > div {
   height: 256px;
   width: 192px;
   display: flex;
@@ -37,32 +69,32 @@ main > div.home > section.play-section > div.play-section-center > div {
   cursor: pointer;
   transition-duration: 200ms;
 }
-main > div.home > section.play-section > div.play-section-center > div:hover {
+main > div.home > section.play-section > div.play-section-center > div.play > div:hover {
   scale: 1.1;
 }
-main > div.home > section.play-section > div.play-section-center > div:active {
+main > div.home > section.play-section > div.play-section-center > div.play > div:active {
   scale: 0.95;
 }
-main > div.home > section.play-section > div.play-section-center > .create-lobby {
+main > div.home > section.play-section > div.play-section-center > div.play > .create-lobby {
   background-color: rgb(255, 56, 56);
 }
-main > div.home > section.play-section > div.play-section-center > .join-lobby {
+main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby {
   display: flex;
   flex-direction: column;
   gap: 8px;
   background-color: rgb(40, 40, 255);
 }
-main > div.home > section.play-section > div.play-section-center > .join-lobby > div > input {
+main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > div > input {
   height: 32px;
   width: 24px;
   border: none;
   border-radius: 8px;
   text-align: center;
 }
-main > div.home > section.play-section > div.play-section-center > .join-lobby > div > input:focus {
+main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > div > input:focus {
   outline: none;
 }
-main > div.home > section.play-section > div.play-section-center > .join-lobby > button {
+main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > button {
   padding: 8px;
   background-color: #121212;
   border: none;
@@ -79,10 +111,163 @@ main > div.home > section.play-section > div.play-section-bottom > div {
   gap: 4px;
   cursor: pointer;
 }
-main > div.home > section.how-to-play-section {
-  height: 100vh;
+main > div.home > section.description-section {
+  height: max(100vh - 32px, 960px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 32px;
   background: linear-gradient(0, #00051d, #001369, #2e3e8f);
+  padding: 16px;
   box-shadow: 0 0 20px 10px rgba(46, 62, 144, 0.5);
+}
+@media (max-width: 720px) {
+  main > div.home > section.description-section {
+    height: max(100vh - 32px, 1280px);
+  }
+}
+main > div.home > section.description-section > div, main > div.home > section.description-section footer {
+  width: min(100%, 960px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+main > div.home > section.description-section > div > h1, main > div.home > section.description-section footer > h1 {
+  font-family: "Climate Crisis";
+  font-size: 40px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+main > div.home > section.description-section > div.how-to-play > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow {
+  height: 360px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow > button {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111214;
+  border: 1px #18191b solid;
+  border-radius: 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow > button:hover {
+  background-color: #232528;
+  border-color: #292b2e;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow > button:active {
+  background-color: #2e2f34;
+  border-color: #35363b;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow > button > img {
+  height: 20px;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow > div {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation-name: slideDown;
+  animation-duration: 500ms;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow > div > img {
+  height: 280px;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow > div > h2 {
+  font-size: 20px;
+  font-weight: 900;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow-navigation {
+  display: flex;
+  gap: 8px;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow-navigation > div {
+  height: 16px;
+  width: 16px;
+  background-color: #606d99;
+  border-radius: 50%;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.home > section.description-section > div.how-to-play > div > div.slideshow-navigation > div.active {
+  background-color: #b0b4c3;
+}
+main > div.home > section.description-section > div.faq > div > p {
+  margin-bottom: 16px;
+}
+main > div.home > section.description-section > footer > button {
+  background-color: transparent;
+  background: linear-gradient(105deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  color: white;
+  background-size: 1800%;
+  font-size: 32px;
+  font-weight: 900;
+  font-family: "Montserrat";
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-shadow: 3px 3px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.5);
+  backdrop-filter: brightness(3);
+  cursor: pointer;
+  animation: rainbow 30s ease infinite;
+}
+main > div.home > section.description-section > footer > ul {
+  display: flex;
+  gap: 12px;
+  list-style-type: none;
+}
+@media (max-width: 720px) {
+  main > div.home > section.description-section > footer > ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+main > div.home > section.description-section > footer > ul > li {
+  display: flex;
+}
+main > div.home > section.description-section > footer > ul > li > a {
+  background-color: transparent;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: "Montserrat";
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+main > div.home > section.description-section > footer > ul > li > a.github {
+  background: #006d32;
+  box-shadow: 0 0 16px rgba(173, 255, 47, 0.5) inset;
+}
+main > div.home > section.description-section > footer > ul > li > a.discord {
+  background-image: url(../../assets/images/discord-bg.png);
+  background-size: cover;
+}
+main > div.home > section.description-section > footer > ul > li > a.email {
+  background-color: darkorange;
+  box-shadow: 0 0 16px yellow inset;
+}
+main > div.home > section.description-section > footer > ul > li > a.about {
+  background-color: crimson;
+  box-shadow: 0 0 16px #200000 inset;
 }
 main > div.game {
   height: calc(100vh - 64px);
@@ -256,24 +441,15 @@ main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.
   cursor: pointer;
   transition-duration: 200ms;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 4px;
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button > div {
+  height: 24px;
+  width: 24px;
+  background-color: #949ba4;
+  mask-image: url("../../assets/images/icons/add.svg");
   transition-duration: 200ms;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button > img:last-of-type {
-  opacity: 0;
-}
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button:hover > img:first-of-type {
-  opacity: 0;
-}
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button:hover > img:last-of-type {
-  opacity: 1;
-}
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button > img {
-  height: 24px;
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button.add:hover > div {
+  background-color: white;
 }
 main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.value {
   display: flex;
@@ -475,24 +651,23 @@ main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field 
   cursor: pointer;
   transition-duration: 200ms;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 4px;
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button > div {
+  height: 24px;
+  width: 24px;
+  background-color: #949ba4;
   transition-duration: 200ms;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button > img:last-of-type {
-  opacity: 0;
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button.trash > div {
+  mask-image: url("../../assets/images/icons/trash.svg");
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button:hover > img:first-of-type {
-  opacity: 0;
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button.trash:hover > div {
+  background-color: #a12829;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button:hover > img:last-of-type {
-  opacity: 1;
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button.add > div {
+  mask-image: url("../../assets/images/icons/add.svg");
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button > img {
-  height: 24px;
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.buttons > button.add:hover > div {
+  background-color: white;
 }
 main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > button {
   width: 100%;
@@ -643,4 +818,95 @@ main > div.game > div.sidebar > div.chat > div.input > button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+main > div.game > div.sidebar > div.lobby {
+  height: calc(100% - 50px);
+  flex-direction: column;
+}
+main > div.game > div.sidebar > div.lobby > div.player-search {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main > div.game > div.sidebar > div.lobby > div.player-search > input[type=text] {
+  height: 32px;
+  width: calc(100% - 32px);
+  background-color: #1e1f22;
+  border: none;
+  border-radius: 4px;
+  padding: 0 8px;
+}
+main > div.game > div.sidebar > div.lobby > div.players {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 8px;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: 4px;
+  padding: 0 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div:hover {
+  background-color: #2d2f33;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div > div.main {
+  display: flex;
+  gap: 8px;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div > div.main > img {
+  height: 36px;
+  border-radius: 18px;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div > div.main > div {
+  display: flex;
+  flex-direction: column;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div > div.main > div > span.nickname {
+  font-weight: 700;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div > div.main > div > span.auth-name {
+  font-size: 14px;
+  color: gray;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div > div.badges > div {
+  border-radius: 4px;
+  padding: 0 2px 6px;
+  cursor: help;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div > div.badges > div.lobby-leader {
+  background-color: rgba(218, 165, 32, 0.3);
+}
+main > div.about {
+  animation-name: slideDown;
+  animation-duration: 500ms;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes rainbow {
+  0% {
+    background-position: 0% 82%;
+  }
+  50% {
+    background-position: 100% 19%;
+  }
+  100% {
+    background-position: 0% 82%;
+  }
 }/*# sourceMappingURL=main.css.map */

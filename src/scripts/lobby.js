@@ -82,3 +82,41 @@ document.body.addEventListener("DOMNodeInserted", function () {
 
 // Make sure to handle game join on page load
 window.addEventListener("load", joinGameFromURL);
+
+// let game = {
+//   "name": "Alexander499's Lobby",
+//   "private": true,
+//   "rules": {
+//     "categories": [
+//       "City",
+//       "Country",
+//       "River"
+//     ],
+//     "everybodyCanEditCategories": false,
+//     "rounds": 1,
+//     "roundEnd": "Press stop & time limit",
+//     "timeLimit": 1,
+//     "showScores": "After each round",
+//     "anonymousVoting": false,
+//     "teams": {
+//       "enabled": false,
+//       "everybodyCanChooseTeams": false,
+//       "teamList": [
+//         {
+//           "name": "",
+//           "players": [
+//             "Alexander499",
+//             "Guest #1"
+//           ]
+//         }
+//       ]
+//     }
+//   },
+//   "players": [
+//     {
+//       "id": 0,
+//       "name": "Alexander499",
+//       "operator": true,
+//     }
+//   ]
+// }

@@ -13,7 +13,8 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/climate-crisis" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles/compiled/general.css">
@@ -22,21 +23,30 @@
   <link rel="stylesheet" href="styles/compiled/create-lobby-overlay.css">
 
   <!-- Scripts -->
-  <script defer src="scripts/overlay-toggle.js"></script>
   <script defer src="scripts/hash.js"></script>
+  <script defer src="scripts/overlay-toggle.js"></script>
   <script defer src="scripts/lobby-sidebar.js"></script>
   <script defer src="scripts/lobby-rules.js"></script>
   <script defer src="scripts/slider.js"></script>
   <script defer type="module" src="scripts/firebase.js"></script>
   <script defer src="/socket.io/socket.io.js"></script>
   <script defer src="scripts/lobby.js"></script>
+  <script defer src="scripts/home.js"></script>
   <noscript>Either you have disabled JavaScript or your browser doesn't support it. Get a new Browser (e.g. Google Chrome, Microsoft Edge, Safari, Mozilla Firefox, Opera).</noscript>
 </head>
 <body>
   <header>
     <div class="header-left">
       <a href onclick="if (window.location.hash.startsWith('#lobby')) { return confirm('Leave this lobby?'); }">City Country River</a>
-      <span onclick="navigator.clipboard.writeText(window.location.hash.slice(-5));" title="Copy lobby link">#lobby/abcde📋</span>
+      <div id="headerGame" class="game">
+        <div>
+          <div onclick="navigator.clipboard.writeText(window.location.hash.slice(-5)); this.innerHTML = `<div style='color: white;'>Copied!</div>`; setTimeout(() => this.innerHTML = `<span>${window.location.hash.split('/')[1]}</span>`, 1000);" title="Copy lobby link"><span id="gameCode">undefined</span></div>
+          <label>
+            <input type="checkbox" checked>
+            <span><div></div></span>
+          </label>
+        </div>
+      </div>
     </div>
     <div class="header-center"></div>
     <div class="header-right">
@@ -54,7 +64,7 @@
           </div> -->
         </div>
       </div>
-      <button class="friends"><img src="assets/images/friends.svg"></button>
+      <button class="friends"><img src="assets/images/icons/friends.svg"></button>
     </div>
   </header>
   <main id="app"></main>
@@ -63,7 +73,7 @@
       <div class="title">
         <div></div>
         <h2>Create Lobby</h2>
-        <button onclick="createLobbyOverlay(0);"><img src="assets/images/close.svg"></button>
+        <button onclick="createLobbyOverlay(0);"><div></div></button>
       </div>
       <input type="text" maxlength="24" placeholder="Lobby name">
       <div class="lobby-privacy">

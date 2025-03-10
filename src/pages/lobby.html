@@ -23,8 +23,7 @@
                 <div class="text-field">
                   <input type="text" maxlength="32" placeholder="Own category name">
                   <button class="add" title="Add own category">
-                    <img src="assets/images/add.svg">
-                    <img src="assets/images/add-hover.svg">
+                    <div></div>
                   </button>
                 </div>
               </div>
@@ -36,8 +35,8 @@
               <label class="toggle-switch">
                 <input id="everybodyCanEditCategories" type="checkbox">
                 <span class="slider">
-                  <img class="unchecked" src="assets/images/toggle-switch-unchecked.svg">
-                  <img class="checked" src="assets/images/toggle-switch-checked.svg">
+                  <img class="unchecked" src="assets/images/icons/toggle-switch-unchecked.svg">
+                  <img class="checked" src="assets/images/icons/toggle-switch-checked.svg">
                 </span>
               </label>
             </div>
@@ -84,8 +83,8 @@
               <label class="toggle-switch">
                 <input id="anonymousVoting" type="checkbox">
                 <span class="slider">
-                  <img class="unchecked" src="assets/images/toggle-switch-unchecked.svg">
-                  <img class="checked" src="assets/images/toggle-switch-checked.svg">
+                  <img class="unchecked" src="assets/images/icons/toggle-switch-unchecked.svg">
+                  <img class="checked" src="assets/images/icons/toggle-switch-checked.svg">
                 </span>
               </label>
             </div>
@@ -99,8 +98,8 @@
               <label class="toggle-switch">
                 <input id="teams" type="checkbox" disabled>
                 <span class="slider">
-                  <img class="unchecked" src="assets/images/toggle-switch-unchecked.svg">
-                  <img class="checked" src="assets/images/toggle-switch-checked.svg">
+                  <img class="unchecked" src="assets/images/icons/toggle-switch-unchecked.svg">
+                  <img class="checked" src="assets/images/icons/toggle-switch-checked.svg">
                 </span>
               </label>
             </div>
@@ -111,8 +110,8 @@
               <label class="toggle-switch">
                 <input id="everybodyCanChooseTeams" type="checkbox" disabled>
                 <span class="slider">
-                  <img class="unchecked" src="assets/images/toggle-switch-unchecked.svg">
-                  <img class="checked" src="assets/images/toggle-switch-checked.svg">
+                  <img class="unchecked" src="assets/images/icons/toggle-switch-unchecked.svg">
+                  <img class="checked" src="assets/images/icons/toggle-switch-checked.svg">
                 </span>
               </label>
             </div>
@@ -131,12 +130,10 @@
                 </div>
                 <div class="buttons">
                   <button class="trash" title="Delete team" disabled>
-                    <img src="assets/images/trash.svg">
-                    <img src="assets/images/trash-hover.svg">
+                    <div></div>
                   </button>
                   <button class="add" title="Add player" disabled>
-                    <img src="assets/images/add.svg">
-                    <img src="assets/images/add-hover.svg">
+                    <div></div>
                   </button>
                 </div>
               </div>
@@ -156,7 +153,9 @@
         <button class="round-button green">Start game</button>
       </div>
     </div>
-    <div class="middle">Lobby code: <span id="gameCode"></span></div>
+    <div class="middle">
+      <!-- Main Game -->
+    </div>
   </div>
   <div class="sidebar">
     <div class="tabs">
@@ -178,11 +177,38 @@
       </div>
     </div>
     <div id="sidebarLobby" class="lobby">
-      <h2>Lobby</h2>
-      <div id="playerList"></div>
+      <div class="player-search">
+        <input type="text" placeholder="Search players…">
+      </div>
+      <div class="players"> <!-- id="playerList" -->
+        <div>
+          <div class="main">
+            <img src="https://picsum.photos/id/1025/600">
+            <div>
+              <span class="nickname">Alexander499</span>
+              <span class="auth-name">Guest #0</span>
+            </div>
+          </div>
+          <div class="badges">
+            <div class="lobby-leader" title="Lobby leader">👑</div>
+          </div>
+        </div>
+        <div>
+          <div class="main">
+            <img src="https://picsum.photos/id/684/600">
+            <div>
+              <span class="nickname">Guest #1</span>
+              <span class="auth-name">Guest #1</span>
+            </div>
+          </div>
+          <div class="badges">
+            <div class="lobby-leader" title="Lobby leader">👑</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="sidebarSettings" class="settings">
-      <h2>Settings</h2>
+      <h2 style="margin: 8px">Settings</h2>
     </div>
   </div>
 </div>

@@ -10,7 +10,7 @@ main {
     justify-content: center;
 
     > section.play-section {
-      height: calc(100vh - 64px);
+      height: max(calc(100vh - 64px), 480px);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,41 +18,70 @@ main {
   
       > div.play-section-center {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 16px;
-  
-        > div {
-          height: 256px;
-          width: 192px;
+        gap: 12px;
+
+        > div.name {
+          width: 100%;
+
+          > div {
+            width: calc(100%);
+            border-radius: 12px;
+            box-shadow: 0 0 16px rgba(black, 0.2);
+
+            > input[type=text] {
+              height: 40px;
+              width: calc(100% - 16px);
+              background-color: rgba(black, 0.5);
+              backdrop-filter: blur(16px) brightness(1.1);
+              border: 1px rgba(white, 0.3) solid;
+              border-radius: 8px;
+              padding: 0 8px;
+
+              &:focus { outline: none; }
+            }
+          }
+        }
+
+        > div.play {
           display: flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
-          border-radius: 12px;
-          font-size: 20px;
-          font-weight: 700;
-          box-shadow: 0 0 16px rgba(black, 0.5);
-          cursor: pointer;
-          transition-duration: 200ms;
-        
-          &:hover { scale: 1.1; }
-          &:active { scale: 0.95; }
-        }
-    
-        > .create-lobby {
-          background-color: rgb(255, 56, 56);
-        }
-    
-        > .join-lobby {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          background-color: rgb(40, 40, 255);
+          gap: 16px;
+
+          @media (max-width: 720px) {
+            flex-direction: column;
+          }
     
           > div {
-    
-            > input {
+            height: 256px;
+            width: 192px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            box-shadow: 0 0 16px rgba(black, 0.5);
+            cursor: pointer;
+            transition-duration: 200ms;
+          
+            &:hover { scale: 1.1; }
+            &:active { scale: 0.95; }
+          }
+      
+          > .create-lobby { background-color: rgba(255, 56, 56); }
+      
+          > .join-lobby {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-color: rgb(40, 40, 255);
+      
+            > div > input {
               height: 32px;
               width: 24px;
               border: none;
@@ -63,18 +92,18 @@ main {
                 outline: none;
               }
             }
-          }
-    
-          > button {
-            padding: 8px;
-            background-color: #121212;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+      
+            > button {
+              padding: 8px;
+              background-color: #121212;
+              border: none;
+              border-radius: 8px;
+              cursor: pointer;
+            }
           }
         }
       }
-  
+
       > div.play-section-bottom {
         padding: 12px 0;
   
@@ -88,10 +117,190 @@ main {
       }
     }
 
-    > section.how-to-play-section {
-      height: 100vh;
+    > section.description-section {
+      height: max(calc(100vh - 32px), 960px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      gap: 32px;
       background: linear-gradient(0, #00051d, #001369, #2e3e8f);
+      padding: 16px;
       box-shadow: 0 0 20px 10px rgba(46, 62, 144, 0.5);
+
+      @media (max-width: 720px) {
+        height: max(calc(100vh - 32px), 1280px);
+      }
+
+      > div, footer {
+        width: min(100%, 960px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+
+        > h1 {
+          font-family: "Climate Crisis";
+          font-size: 40px;
+          font-weight: normal;
+          text-transform: uppercase;
+        }
+      }
+
+      > div.how-to-play {
+        > div {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
+
+          > div.slideshow {
+            height: 360px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            > button {
+              height: 40px;
+              width: 40px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: #111214;
+              border: 1px #18191b solid;
+              border-radius: 8px;
+              cursor: pointer;
+              transition-duration: 200ms;
+
+              &:hover {
+                background-color: #232528;
+                border-color: #292b2e;
+              }
+
+              &:active {
+                background-color: #2e2f34;
+                border-color: #35363b;
+              }
+
+              > img { height: 20px; }
+            }
+
+            > div {
+              width: 50%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              animation-name: slideDown;
+              animation-duration: 500ms;
+
+              > img {
+                height: 280px;
+              }
+
+              > h2 {
+                font-size: 20px;
+                font-weight: 900;
+              }
+            }
+          }
+
+          > div.slideshow-navigation {
+            display: flex;
+            gap: 8px;
+
+            > div {
+              height: 16px;
+              width: 16px;
+              background-color: #606d99;
+              border-radius: 50%;
+              cursor: pointer;
+              transition-duration: 200ms;
+
+              &.active {
+                background-color: #b0b4c3;
+              }
+            }
+          }
+        }
+      }
+
+      > div.faq {
+        > div {
+          > p {
+            margin-bottom: 16px;
+          }
+        }
+      }
+
+      > footer {
+        > button {
+          background-color: transparent;
+          background: linear-gradient(105deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+          color: white;
+          background-size: 1800%;
+          font-size: 32px;
+          font-weight: 900;
+          font-family: "Montserrat";
+          text-decoration: none;
+          border: none;
+          border-radius: 8px;
+          padding: 12px 16px;
+          text-shadow: 3px 3px rgba(black, 0.75);
+          box-shadow: 0 0 24px rgba(white, 0.5);
+          backdrop-filter: brightness(3);
+          cursor: pointer;
+          animation: rainbow 30s ease infinite;
+        }
+
+        > ul {
+          display: flex;
+          gap: 12px;
+          list-style-type: none;
+
+          @media (max-width: 720px) {
+            flex-direction: column;
+            align-items: center;
+          }
+
+          > li {
+            display: flex;
+
+            > a {
+              background-color: transparent;
+              color: white;
+              font-size: 24px;
+              font-weight: 700;
+              font-family: "Montserrat";
+              text-decoration: none;
+              border-radius: 8px;
+              padding: 8px 12px;
+              cursor: pointer;
+
+              &.github {
+                background: #006d32;
+                box-shadow: 0 0 16px rgba(greenyellow, 0.5) inset;
+              }
+
+              &.discord {
+                background-image: url(../../assets/images/discord-bg.png);
+                background-size: cover;
+              }
+
+              &.email {
+                background-color: darkorange;
+                box-shadow: 0 0 16px yellow inset;
+              }
+
+              &.about {
+                background-color: crimson;
+                box-shadow: 0 0 16px #200000 inset;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -270,19 +479,15 @@ main {
                         cursor: pointer;
                         transition-duration: 200ms;
 
-                        > img {
-                          position: absolute;
-                          top: 0;
-                          left: 0;
-                          padding: 4px;
+                        > div {
+                          height: 24px;
+                          width: 24px;
+                          background-color: #949ba4;
+                          mask-image: url('../../assets/images/icons/add.svg');
                           transition-duration: 200ms;
-
-                          &:last-of-type { opacity: 0; }
                         }
 
-                        &:hover > img:first-of-type { opacity: 0; }
-                        &:hover > img:last-of-type { opacity: 1; }
-                        > img { height: 24px; }
+                        &.add:hover > div { background-color: white; }
                       }
                     }
                   }
@@ -497,19 +702,17 @@ main {
                       cursor: pointer;
                       transition-duration: 200ms;
 
-                      > img {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        padding: 4px;
+                      > div {
+                        height: 24px;
+                        width: 24px;
+                        background-color: #949ba4;
                         transition-duration: 200ms;
-
-                        &:last-of-type { opacity: 0; }
                       }
 
-                      &:hover > img:first-of-type { opacity: 0; }
-                      &:hover > img:last-of-type { opacity: 1; }
-                      > img { height: 24px; }
+                      &.trash > div { mask-image: url('../../assets/images/icons/trash.svg'); }
+                      &.trash:hover > div { background-color: #a12829; }
+                      &.add > div { mask-image: url('../../assets/images/icons/add.svg'); }
+                      &.add:hover > div { background-color: white; }
                     }
                   }
                 }
@@ -675,6 +878,104 @@ main {
           }
         }
       }
+
+      > div.lobby {
+        height: calc(100% - 50px);
+        flex-direction: column;
+
+        > div.player-search {
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          > input[type=text] {
+            height: 32px;
+            width: calc(100% - 32px);
+            background-color: #1e1f22;
+            border: none;
+            border-radius: 4px;
+            padding: 0 8px;
+          }
+        }
+
+        > div.players {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          padding: 0 8px;
+
+          > div {
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            border-radius: 4px;
+            padding: 0 8px;
+            cursor: pointer;
+            transition-duration: 200ms;
+
+            &:hover { background-color: #2d2f33; }
+
+            > div.main {
+              display: flex;
+              gap: 8px;
+
+              > img {
+                height: 36px;
+                border-radius: 18px;
+              }
+
+              > div {
+                display: flex;
+                flex-direction: column;
+
+                > span.nickname {
+                  font-weight: 700;
+                }
+  
+                > span.auth-name {
+                  font-size: 14px;
+                  color: gray;
+                }
+              }
+            }
+
+            > div.badges {
+              > div {
+                border-radius: 4px;
+                padding: 0 2px 6px;
+                cursor: help;
+  
+                &.lobby-leader {background-color: rgba(goldenrod, 0.3);}
+              }
+            }
+          }
+        }
+      }
     }
   }
+
+  > div.about {
+    animation-name: slideDown;
+    animation-duration: 500ms;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20%);
+  } 
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rainbow { 
+  0% { background-position: 0% 82%; }
+  50% { background-position: 100% 19%; }
+  100% { background-position: 0% 82%; }
 }

@@ -12,7 +12,7 @@ header {
   > .header-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 
     > a {
       color: white;
@@ -21,11 +21,90 @@ header {
       text-decoration: none;
     }
 
-    > span {
-      color: gray;
-      font-size: min(2vw, 24px);
-      font-weight: 500;
-      cursor: copy;
+    > div.game {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+
+      > div {
+        display: flex;
+        gap: 3px;
+
+        &:has(label > input[type=checkbox]:checked) > div {
+          padding: 0 4px 0 8px;
+
+          &::after { right: min(calc(50% - 16px)); }
+          > span { filter: blur(3px); }
+        }
+
+        > div {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: yellow;
+          font-size: min(2vw, 20px);
+          font-family: Consolas;
+          border: 2px yellow solid;
+          border-radius: 16px 6px 6px 16px;
+          padding: 0 28px 0 8px;
+          cursor: copy;
+          transition-duration: 200ms;
+
+          &::after {
+            height: 20px;
+            width: 20px;
+            content: '';
+            position: absolute;
+            right: 0;
+            display: block;
+            mask-image: url('../../assets/images/icons/copy.svg');
+            mask-repeat: no-repeat;
+            background-color: yellow;
+            padding-right: 4px;
+            transition-duration: 200ms;
+          }
+        }
+
+        > label {
+          position: relative;
+          display: inline-block;
+          width: 34px;
+          height: 32px;
+
+          > input[type=checkbox] {
+            display: none;
+  
+            &:checked + span > div {
+              mask-image: url('../../assets/images/icons/hidden.svg');
+            }
+          }
+
+          > span {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px aqua solid;
+            border-radius: 6px 16px 16px 6px;
+            padding-right: 2px;
+            cursor: pointer;
+
+            > div {
+              height: 20px;
+              width: 20px;
+              background-color: aqua;
+              mask-image: url('../../assets/images/icons/visible.svg');
+            }
+          }
+        }
+      }
     }
   }
 
@@ -42,7 +121,6 @@ header {
       > div {
         height: 24px;
         width: 24px;
-        // background-color: black; // Temporary
         background-image: url(../../assets/images/coin.png);
         background-position: center;
         background-repeat: no-repeat;

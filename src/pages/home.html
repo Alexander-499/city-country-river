@@ -2,27 +2,99 @@
   <section class="play-section">
     <div></div>
     <div class="play-section-center">
-      <div class="create-lobby" onclick="createLobbyOverlay(1);">
-        <span>Create lobby</span>
-      </div>
-      <div class="join-lobby">
-        <span>Join a lobby</span>
-        <div id="joinLobbyInputContainer">
-          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
-          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
-          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
-          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
-          <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+      <div class="name">
+        <div>
+          <input type="text" placeholder="Enter a username">
         </div>
-        <button onclick="joinLobby();">Join</button>
+      </div>
+      <div class="play">
+        <div class="create-lobby" onclick="createLobbyOverlay(1);">
+          <span>Create lobby</span>
+        </div>
+        <div class="join-lobby">
+          <span>Join a lobby</span>
+          <div id="joinLobbyInputContainer">
+            <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+            <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+            <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+            <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+            <input type="text" maxlength="1" placeholder="X" oninput="navigate(event, this);" onkeydown="navigate(event, this)">
+          </div>
+          <button onclick="joinLobby();">Join</button>
+        </div>
       </div>
     </div>
     <div class="play-section-bottom">
       <div onclick="window.scrollTo({ top: document.documentElement.scrollHeight - window.innerHeight, behavior: 'smooth' });">
-        <i>How to Play</i>
-        <span>▼</span>
+        <i>How to Play</i><span>▼</span>
       </div>
     </div>
   </section>
-  <section class="how-to-play-section"></section>
+  <section class="description-section">
+    <div class="how-to-play">
+      <h1>How to play</h1>
+      <div>
+        <div class="slideshow">
+          <button onclick="howToPlaySlideshowPlusSlides(-1);"><img src="assets/images/icons/previous.svg"></button>
+          <div>
+            <img src="https://makeitmeme.com/assets/static/tutorial_slide_2.BaHQe5wh.png">
+            <h2>Gather your friends 🫂</h2>
+            <span>Invite your friends to a voice call (e.g. Discord) and create a lobby.</span>
+          </div>
+          <div style="display: none;">
+            <img src="https://makeitmeme.com/assets/static/tutorial_slide_2.BaHQe5wh.png">
+            <h2>Pick categories 🗂️</h2>
+            <span>Choose from a variety of fun and tricky categories before the game begins.</span>
+          </div>
+          <div style="display: none;">
+            <img src="https://makeitmeme.com/assets/static/tutorial_slide_2.BaHQe5wh.png">
+            <h2>Spin for a Random Letter 📝</h2>
+            <span>Each round starts with a randomly chosen letter, and every word you come up with must begin with it.</span>
+          </div>
+          <div style="display: none;">
+            <img src="https://makeitmeme.com/assets/static/tutorial_slide_2.BaHQe5wh.png">
+            <h2>Think Fast, Type Faster ⌨️</h2>
+            <span>Come up with words that match the given letter and fit the category before time runs out.</span>
+          </div>
+          <div style="display: none;">
+            <img src="https://makeitmeme.com/assets/static/tutorial_slide_2.BaHQe5wh.png">
+            <h2>Review & Discuss 🤔</h2>
+            <span>See what others have written, vote on their words, and discuss any wrong answers.</span>
+          </div>
+          <div style="display: none;">
+            <img src="https://makeitmeme.com/assets/static/tutorial_slide_2.BaHQe5wh.png">
+            <h2>Climb the Leaderboard 🥇</h2>
+            <span>Score points for valid answers and see who becomes the ultimate word master!</span>
+          </div>
+          <button onclick="howToPlaySlideshowPlusSlides(1);"><img src="assets/images/icons/next.svg"></button>
+        </div>
+        <div class="slideshow-navigation">
+          <div class="active" onclick="howToPlaySlideshowCurrentSlide(1);"></div>
+          <div onclick="howToPlaySlideshowCurrentSlide(2);"></div>
+          <div onclick="howToPlaySlideshowCurrentSlide(3);"></div>
+          <div onclick="howToPlaySlideshowCurrentSlide(4);"></div>
+          <div onclick="howToPlaySlideshowCurrentSlide(5);"></div>
+          <div onclick="howToPlaySlideshowCurrentSlide(6);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="faq">
+      <h1 title="Frequently asked questions">FAQ</h1>
+      <div>
+        <h3>What is City Country River? ▾</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nostrum odit expedita similique beatae optio, velit dolores cum ut aperiam quidem animi at quaerat suscipit. Delectus expedita cumque similique nam!</p>
+        <h3>When is the game ready? ▾</h3>
+        <p>Not yet... 👍</p>
+      </div>
+    </div>
+    <footer>
+      <button onclick="window.scrollTo({ top, behavior: 'smooth' });">Play now!</button>
+      <ul>
+        <li><a class="github" href="https://github.com/Alexander-499/city-country-river">GitHub</a></li>
+        <li><a class="discord" onclick="alert(`Add 'alexander499_' on Discord to contact me via DM.\nPlease do not spam me or you are a 🐀`)">Discord</a></li>
+        <li><a class="email" href="mailto:aginfo9@gruenefeld.de">Email</a></li>
+        <li><a class="about" href="#about">About & Credits</a></li>
+      </ul>
+    </footer>
+  </section>
 </div>

@@ -21,12 +21,10 @@ function router() {
       if (this.status === 200) {
         app.innerHTML = this.responseText;
         if (window.location.hash.startsWith('#lobby/')) {
-          const gameCode = window.location.hash.split('/')[1];
-          document.getElementById('gameCode').textContent = gameCode;
+          document.getElementById('gameCode').textContent = window.location.hash.split('/')[1];
+          document.getElementById('headerGame').classList.add('active');
         }
-      } else if (this.status === 404) {
-        app.innerHTML = "Page not found.";
-      }
+      } else if (this.status === 404) { app.innerHTML = "Page not found."; }
       document.dispatchEvent(new Event('html-included'));
     }
   };
@@ -34,8 +32,6 @@ function router() {
   xhr.send();
 }
 
-// Handle navigation without page reload
+// Handle navigation without page reload and initial load
 window.addEventListener('hashchange', router);
-
-// Initial load
 router();

@@ -38,3 +38,7 @@
     &:hover { background-color: #1b930b; }
   }
 }
+
+input[type=text]:focus {
+  outline: none;
+}

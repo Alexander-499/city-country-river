@@ -52,11 +52,15 @@
   border: none;
   cursor: pointer;
 }
-.create-lobby-overlay > div > div.title > button > img {
+.create-lobby-overlay > div > div.title > button > div {
+  height: 24px;
+  width: 24px;
+  background-color: #949ba4;
+  mask-image: url("../../assets/images/icons/close.svg");
   transition-duration: 200ms;
 }
-.create-lobby-overlay > div > div.title > button:hover > img {
-  filter: invert(50%) brightness(2);
+.create-lobby-overlay > div > div.title > button:hover > div {
+  background-color: white;
 }
 .create-lobby-overlay > div > input {
   height: 32px;

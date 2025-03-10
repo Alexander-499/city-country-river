@@ -52,8 +52,15 @@
         border: none;
         cursor: pointer;
 
-        > img {  transition-duration: 200ms; }
-        &:hover > img { filter: invert(50%) brightness(2); }
+        > div {
+          height: 24px;
+          width: 24px;
+          background-color: #949ba4;
+          mask-image: url('../../assets/images/icons/close.svg');
+          transition-duration: 200ms;
+        }
+
+        &:hover > div { background-color: white; }
       }
     }
 
