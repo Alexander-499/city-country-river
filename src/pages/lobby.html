@@ -34,10 +34,7 @@
             <div class="field">
               <label class="toggle-switch">
                 <input id="everybodyCanEditCategories" type="checkbox">
-                <span class="slider">
-                  <img class="unchecked" src="assets/images/icons/toggle-switch-unchecked.svg">
-                  <img class="checked" src="assets/images/icons/toggle-switch-checked.svg">
-                </span>
+                <span class="slider"></span>
               </label>
             </div>
           </div>
@@ -82,10 +79,7 @@
             <div class="field">
               <label class="toggle-switch">
                 <input id="anonymousVoting" type="checkbox">
-                <span class="slider">
-                  <img class="unchecked" src="assets/images/icons/toggle-switch-unchecked.svg">
-                  <img class="checked" src="assets/images/icons/toggle-switch-checked.svg">
-                </span>
+                <span class="slider"></span>
               </label>
             </div>
           </div>
@@ -97,10 +91,7 @@
             <div class="field">
               <label class="toggle-switch">
                 <input id="teams" type="checkbox" disabled>
-                <span class="slider">
-                  <img class="unchecked" src="assets/images/icons/toggle-switch-unchecked.svg">
-                  <img class="checked" src="assets/images/icons/toggle-switch-checked.svg">
-                </span>
+                <span class="slider"></span>
               </label>
             </div>
           </div>
@@ -109,10 +100,7 @@
             <div class="field">
               <label class="toggle-switch">
                 <input id="everybodyCanChooseTeams" type="checkbox" disabled>
-                <span class="slider">
-                  <img class="unchecked" src="assets/images/icons/toggle-switch-unchecked.svg">
-                  <img class="checked" src="assets/images/icons/toggle-switch-checked.svg">
-                </span>
+                <span class="slider"></span>
               </label>
             </div>
           </div>
@@ -155,6 +143,7 @@
     </div>
     <div class="middle">
       <!-- Main Game -->
+      <div class="game-container" style="display: none;"></div>
     </div>
   </div>
   <div class="sidebar">
@@ -164,48 +153,17 @@
       <button onclick="switchSidebarTab('sidebarSettings', this)">⚙️ Settings</button>
     </div>
     <div id="sidebarChat" class="chat active">
-      <div class="chat-log">
-        <div><span class="time">22:06</span><span class="badge lobby-leader" title="Lobby leader">👑</span><span class="name">Alexander499</span>:&nbsp;<span>Hello</span></div>
-        <div><span class="time">22:08</span><span class="game-message join">Guest #1 has joined the game</span></div>
-        <div><span class="time">22:09</span><span class="name">Guest #1</span>:&nbsp;<span>Hey, buddy</span></div>
-      </div>
-      <div class="input">
-        <textarea id="chatTextarea" maxlength="96" placeholder="Type here to chat"></textarea>
-        <button>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.02 14 11.4a.6.6 0 0 1 0 1.18L6.6 14l-2.94 5.87a1.48 1.48 0 0 0 1.99 1.98l17.03-8.52a1.48 1.48 0 0 0 0-2.64L5.65 2.16a1.48 1.48 0 0 0-1.99 1.98l2.94 5.88Z" class=""></path></svg>
-        </button>
-      </div>
+      <div id="chatLog" class="chat-log"></div>
+      <form id="chatForm" class="input">
+        <input id="chatTextarea" type="text" maxlength="96" placeholder="Type here to chat" autocomplete="off"></input>
+        <button><div></div></button>
+      </form>
     </div>
     <div id="sidebarLobby" class="lobby">
       <div class="player-search">
         <input type="text" placeholder="Search players…">
       </div>
-      <div class="players"> <!-- id="playerList" -->
-        <div>
-          <div class="main">
-            <img src="https://picsum.photos/id/1025/600">
-            <div>
-              <span class="nickname">Alexander499</span>
-              <span class="auth-name">Guest #0</span>
-            </div>
-          </div>
-          <div class="badges">
-            <div class="lobby-leader" title="Lobby leader">👑</div>
-          </div>
-        </div>
-        <div>
-          <div class="main">
-            <img src="https://picsum.photos/id/684/600">
-            <div>
-              <span class="nickname">Guest #1</span>
-              <span class="auth-name">Guest #1</span>
-            </div>
-          </div>
-          <div class="badges">
-            <div class="lobby-leader" title="Lobby leader">👑</div>
-          </div>
-        </div>
-      </div>
+      <div id="playerList" class="players"></div>
     </div>
     <div id="sidebarSettings" class="settings">
       <h2 style="margin: 8px">Settings</h2>

@@ -13,3 +13,9 @@ function howToPlaySlideshowShowSlides(n) {
   slides.forEach((slide, i) => slide.style.display = i === howToPlaySlideshowSlideIndex - 1 ? "flex" : "none");
   dots.forEach((dot, i) => dot.classList.toggle("active", i === howToPlaySlideshowSlideIndex - 1));
 }
+
+// Navigate inputs back and forward
+function navigate(e, el) {
+  if (e.inputType && el.value.length === 1) { el.nextElementSibling?.focus(); }
+  if (e.key === "Backspace" && el.value === "") { el.previousElementSibling?.focus(); }
+}

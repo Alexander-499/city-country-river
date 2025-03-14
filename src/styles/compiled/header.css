@@ -22,24 +22,26 @@ header > .header-left > a {
 }
 header > .header-left > div.game {
   display: none;
+  align-items: center;
+  gap: 8px;
 }
 header > .header-left > div.game.active {
-  display: block;
+  display: flex;
 }
-header > .header-left > div.game > div {
+header > .header-left > div.game > div.lobby-code {
   display: flex;
   gap: 3px;
 }
-header > .header-left > div.game > div:has(label > input[type=checkbox]:checked) > div {
+header > .header-left > div.game > div.lobby-code:has(label > input[type=checkbox]:checked) > div {
   padding: 0 4px 0 8px;
 }
-header > .header-left > div.game > div:has(label > input[type=checkbox]:checked) > div::after {
+header > .header-left > div.game > div.lobby-code:has(label > input[type=checkbox]:checked) > div::after {
   right: min(50% - 16px);
 }
-header > .header-left > div.game > div:has(label > input[type=checkbox]:checked) > div > span {
+header > .header-left > div.game > div.lobby-code:has(label > input[type=checkbox]:checked) > div > span {
   filter: blur(3px);
 }
-header > .header-left > div.game > div > div {
+header > .header-left > div.game > div.lobby-code > div {
   position: relative;
   display: flex;
   align-items: center;
@@ -53,7 +55,7 @@ header > .header-left > div.game > div > div {
   cursor: copy;
   transition-duration: 200ms;
 }
-header > .header-left > div.game > div > div::after {
+header > .header-left > div.game > div.lobby-code > div::after {
   height: 20px;
   width: 20px;
   content: "";
@@ -66,19 +68,19 @@ header > .header-left > div.game > div > div::after {
   padding-right: 4px;
   transition-duration: 200ms;
 }
-header > .header-left > div.game > div > label {
+header > .header-left > div.game > div.lobby-code > label {
   position: relative;
   display: inline-block;
   width: 34px;
   height: 32px;
 }
-header > .header-left > div.game > div > label > input[type=checkbox] {
+header > .header-left > div.game > div.lobby-code > label > input[type=checkbox] {
   display: none;
 }
-header > .header-left > div.game > div > label > input[type=checkbox]:checked + span > div {
+header > .header-left > div.game > div.lobby-code > label > input[type=checkbox]:checked + span > div {
   mask-image: url("../../assets/images/icons/hidden.svg");
 }
-header > .header-left > div.game > div > label > span {
+header > .header-left > div.game > div.lobby-code > label > span {
   position: absolute;
   display: flex;
   align-items: center;
@@ -92,11 +94,30 @@ header > .header-left > div.game > div > label > span {
   padding-right: 2px;
   cursor: pointer;
 }
-header > .header-left > div.game > div > label > span > div {
+header > .header-left > div.game > div.lobby-code > label > span > div {
   height: 20px;
   width: 20px;
   background-color: aqua;
   mask-image: url("../../assets/images/icons/visible.svg");
+}
+header > .header-left > div.game > div.lobby-other {
+  display: flex;
+  align-items: center;
+}
+header > .header-left > div.game > div.lobby-other > div > span {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 2px 2px 4px;
+  margin-right: 8px;
+  cursor: help;
+}
+header > .header-left > div.game > div.lobby-other > div > span.active {
+  display: block;
+}
+header > .header-left > div.game > div.lobby-other > span {
+  font-size: 20px;
+  font-weight: 300;
 }
 header > .header-right {
   display: flex;
@@ -123,6 +144,12 @@ header > .header-right > .profile, header > .header-right > .friends {
 }
 header > .header-right > .profile:hover, header > .header-right > .friends:hover {
   background-color: rgba(0, 0, 0, 0.5);
+}
+header > .header-right > .profile input, header > .header-right > .friends input {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: none;
+  border-radius: 16px;
+  padding: 4px 8px;
 }
 header > .header-right > .profile {
   display: flex;

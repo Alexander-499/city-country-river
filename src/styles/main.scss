@@ -39,8 +39,6 @@ main {
               border: 1px rgba(white, 0.3) solid;
               border-radius: 8px;
               padding: 0 8px;
-
-              &:focus { outline: none; }
             }
           }
         }
@@ -87,10 +85,6 @@ main {
               border: none;
               border-radius: 8px;
               text-align: center;
-    
-              &:focus {
-                outline: none;
-              }
             }
       
             > button {
@@ -465,8 +459,6 @@ main {
                         border: none;
                         border-radius: 4px;
                         padding: 12px;
-
-                        &:focus { outline: none; }
                       }
 
                       > button {
@@ -518,19 +510,14 @@ main {
                       cursor: no-drop;
 
                       &::before { background-color: #6f7174; }
-                      > img { filter: brightness(0.57); }
                     }
   
                     &:checked + span.slider {
                       background-color: #23a55a;
       
-                      &:before,
-                      > img {
+                      &:before {
                         transform: translateX(16px);
                       }
-  
-                      > img.unchecked { opacity: 0; }
-                      > img.checked { opacity: 1; }
                     }
                   }
   
@@ -665,8 +652,6 @@ main {
                       border: none;
                       border-radius: 4px 4px 0 0;
                       padding: 12px;
-
-                      &:focus { outline: none; }
                     }
 
                     > div.team-players {
@@ -818,6 +803,7 @@ main {
           flex-direction: column;
           gap: 4px;
           padding: 4px 12px;
+          overflow-y: scroll;
 
           > div {
             display: flex;
@@ -840,29 +826,32 @@ main {
 
             > span.name {
               font-weight: 700;
+              white-space: nowrap;
             }
 
-            > span.game-message.join { color: cyan; }
+            > span.game-message.join { color: yellow; }
+            > span.game-message.leave { color: cyan; }
           }
         }
 
-        > div.input {
+        > form.input {
           height: 44px;
           display: flex;
           background-color: #383a40;
           border-radius: 8px 8px 0 0;
 
-          > textarea {
+          > input {
             height: 20px;
             width: calc(100% - 52px);
             background-color: transparent;
             font-size: 1rem;
             border: none;
-            padding: 12px;
+            padding: 12px 0 12px 12px;
             resize: none;
 
-            &:focus {
-              outline: none;
+            &:placeholder-shown + button > div {
+              background-color: #4d5159;
+              cursor: no-drop;
             }
           }
 
@@ -875,6 +864,16 @@ main {
             background-color: transparent;
             border: none;
             cursor: pointer;
+
+            > div {
+              height: 20px;
+              width: 20px;
+              background-color: #949cf7;
+              mask-image: url('../../assets/images/icons/send.svg');
+              transition-duration: 200ms;
+            }
+
+            &:hover > div { background-color: #707bf4; }
           }
         }
       }
@@ -936,6 +935,7 @@ main {
                 }
   
                 > span.auth-name {
+                  font-family: Consolas;
                   font-size: 14px;
                   color: gray;
                 }
@@ -979,3 +979,5 @@ main {
   50% { background-position: 100% 19%; }
   100% { background-position: 0% 82%; }
 }
+
+// The golden line of thousand 👑

@@ -28,8 +28,6 @@
   <script defer src="scripts/lobby-sidebar.js"></script>
   <script defer src="scripts/lobby-rules.js"></script>
   <script defer src="scripts/slider.js"></script>
-  <script defer type="module" src="scripts/firebase.js"></script>
-  <script defer src="/socket.io/socket.io.js"></script>
   <script defer src="scripts/lobby.js"></script>
   <script defer src="scripts/home.js"></script>
   <noscript>Either you have disabled JavaScript or your browser doesn't support it. Get a new Browser (e.g. Google Chrome, Microsoft Edge, Safari, Mozilla Firefox, Opera).</noscript>
@@ -39,29 +37,33 @@
     <div class="header-left">
       <a href onclick="if (window.location.hash.startsWith('#lobby')) { return confirm('Leave this lobby?'); }">City Country River</a>
       <div id="headerGame" class="game">
-        <div>
+        <div class="lobby-code">
           <div onclick="navigator.clipboard.writeText(window.location.hash.slice(-5)); this.innerHTML = `<div style='color: white;'>Copied!</div>`; setTimeout(() => this.innerHTML = `<span>${window.location.hash.split('/')[1]}</span>`, 1000);" title="Copy lobby link"><span id="gameCode">undefined</span></div>
           <label>
             <input type="checkbox" checked>
             <span><div></div></span>
           </label>
         </div>
+        <div class="lobby-other">
+          <div>
+            <span id="lobbyPrivateIcon" title="Lobby is private. It WON'T be shown in the public lobbies.">🔒</span>
+            <span id="lobbyPublicIcon" title="Lobby is public. It WILL be shown in the public lobbies.">🌍</span>
+          </div>
+          <span id="lobbyName">Loading...</span>
+        </div>
       </div>
     </div>
     <div class="header-center"></div>
     <div class="header-right">
-      <!-- <div class="coins">
-        <div></div>
-        <span>0</span>
-      </div> -->
+      <!-- <div class="coins"><div></div><span>0</span></div> -->
       <div class="profile">
         <div class="profile-picture"></div>
         <div class="profile-name">
-          <span>Profiles are not<br>available yet</span>
-          <!-- <div>
-            <span>LVL 0</span>
-            <progress max="100"></progress>
-          </div> -->
+          <span style="font-size: smaller;">
+            <input id="username" type="text" placeholder="Enter a username">
+            <br>Profiles r not available yet
+          </span>
+          <!-- <div><span>LVL 0</span><progress max="100"></progress></div> -->
         </div>
       </div>
       <button class="friends"><img src="assets/images/icons/friends.svg"></button>
@@ -75,15 +77,33 @@
         <h2>Create Lobby</h2>
         <button onclick="createLobbyOverlay(0);"><div></div></button>
       </div>
-      <input type="text" maxlength="24" placeholder="Lobby name">
+      <input id="lobbyNameInput" type="text" maxlength="24" placeholder="Lobby name">
       <div class="lobby-privacy">
         <input id="lobbyPrivacyPublic" name="lobbyPrivacy" type="radio" value="public" checked>
         <label for="lobbyPrivacyPublic" >🌎 <span>Public</span></label>
         <input id="lobbyPrivacyPrivate" name="lobbyPrivacy" type="radio" value="private">
         <label for="lobbyPrivacyPrivate">🔒 <span>Private</span></label>
       </div>
-      <button id="createLobbyButton" class="round-button" onclick="createLobbyOverlay(0); createLobby()">Create!</button>
+      <button id="createLobbyButton" class="round-button" onclick="createLobbyOverlay(0);">Create!</button>
     </div>
   </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDw7pbWV-PchJf8DWdYdCbTeKieQ_Z7HYY",
+      authDomain: "city-country-river-76537.firebaseapp.com",
+      databaseURL: "https://city-country-river-76537-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "city-country-river-76537",
+      storageBucket: "city-country-river-76537.firebasestorage.app",
+      messagingSenderId: "649795621050",
+      appId: "1:649795621050:web:80dd96692168e5d63f3283",
+      measurementId: "G-Y0WCVG5Z71"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="scripts/app.js"></script>
 </body>
 </html>

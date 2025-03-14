@@ -41,9 +41,6 @@ main > div.home > section.play-section > div.play-section-center > div.name > di
   border-radius: 8px;
   padding: 0 8px;
 }
-main > div.home > section.play-section > div.play-section-center > div.name > div > input[type=text]:focus {
-  outline: none;
-}
 main > div.home > section.play-section > div.play-section-center > div.play {
   display: flex;
   align-items: center;
@@ -90,9 +87,6 @@ main > div.home > section.play-section > div.play-section-center > div.play > .j
   border: none;
   border-radius: 8px;
   text-align: center;
-}
-main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > div > input:focus {
-  outline: none;
 }
 main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > button {
   padding: 8px;
@@ -428,9 +422,6 @@ main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.
   border-radius: 4px;
   padding: 12px;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > input[type=text]:focus {
-  outline: none;
-}
 main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field.categories > div.own-categories > div.text-field > button {
   height: 32px;
   min-width: 32px;
@@ -476,21 +467,11 @@ main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field 
 main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:disabled + span.slider::before {
   background-color: #6f7174;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:disabled + span.slider > img {
-  filter: brightness(0.57);
-}
 main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider {
   background-color: #23a55a;
 }
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider:before,
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider > img {
+main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider:before {
   transform: translateX(16px);
-}
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider > img.unchecked {
-  opacity: 0;
-}
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > input[type=checkbox]:checked + span.slider > img.checked {
-  opacity: 1;
 }
 main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field .toggle-switch > span.slider {
   position: absolute;
@@ -617,9 +598,6 @@ main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field 
   border: none;
   border-radius: 4px 4px 0 0;
   padding: 12px;
-}
-main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.text-field > input[type=text]:focus {
-  outline: none;
 }
 main > div.game > div.rules > div.rules-main > fieldset > div > div > div.field > div.team > div.text-field > div.team-players {
   display: flex;
@@ -766,6 +744,7 @@ main > div.game > div.sidebar > div.chat > div.chat-log {
   flex-direction: column;
   gap: 4px;
   padding: 4px 12px;
+  overflow-y: scroll;
 }
 main > div.game > div.sidebar > div.chat > div.chat-log > div {
   display: flex;
@@ -787,29 +766,34 @@ main > div.game > div.sidebar > div.chat > div.chat-log > div > span.badge.lobby
 }
 main > div.game > div.sidebar > div.chat > div.chat-log > div > span.name {
   font-weight: 700;
+  white-space: nowrap;
 }
 main > div.game > div.sidebar > div.chat > div.chat-log > div > span.game-message.join {
+  color: yellow;
+}
+main > div.game > div.sidebar > div.chat > div.chat-log > div > span.game-message.leave {
   color: cyan;
 }
-main > div.game > div.sidebar > div.chat > div.input {
+main > div.game > div.sidebar > div.chat > form.input {
   height: 44px;
   display: flex;
   background-color: #383a40;
   border-radius: 8px 8px 0 0;
 }
-main > div.game > div.sidebar > div.chat > div.input > textarea {
+main > div.game > div.sidebar > div.chat > form.input > input {
   height: 20px;
   width: calc(100% - 52px);
   background-color: transparent;
   font-size: 1rem;
   border: none;
-  padding: 12px;
+  padding: 12px 0 12px 12px;
   resize: none;
 }
-main > div.game > div.sidebar > div.chat > div.input > textarea:focus {
-  outline: none;
+main > div.game > div.sidebar > div.chat > form.input > input:placeholder-shown + button > div {
+  background-color: #4d5159;
+  cursor: no-drop;
 }
-main > div.game > div.sidebar > div.chat > div.input > button {
+main > div.game > div.sidebar > div.chat > form.input > button {
   height: 100%;
   width: 52px;
   display: flex;
@@ -818,6 +802,16 @@ main > div.game > div.sidebar > div.chat > div.input > button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+main > div.game > div.sidebar > div.chat > form.input > button > div {
+  height: 20px;
+  width: 20px;
+  background-color: #949cf7;
+  mask-image: url("../../assets/images/icons/send.svg");
+  transition-duration: 200ms;
+}
+main > div.game > div.sidebar > div.chat > form.input > button:hover > div {
+  background-color: #707bf4;
 }
 main > div.game > div.sidebar > div.lobby {
   height: calc(100% - 50px);
@@ -873,6 +867,7 @@ main > div.game > div.sidebar > div.lobby > div.players > div > div.main > div >
   font-weight: 700;
 }
 main > div.game > div.sidebar > div.lobby > div.players > div > div.main > div > span.auth-name {
+  font-family: Consolas;
   font-size: 14px;
   color: gray;
 }
