@@ -23,6 +23,13 @@
   <link rel="stylesheet" href="styles/compiled/create-lobby-overlay.css">
 
   <!-- Scripts -->
+  <script>
+    console.info(
+      "%c⚠️ STOP! DO NOT ENTER OR PASTE ANYTHING HERE! ⚠️%c\n%cYou have a 99% chance of being scammed. %c(Unless you know what you are doing!)",
+      "background: #ff3838; color: white; font-size: 24px; font-weight: 900; border-radius: 32px; padding: 4px 12px; text-shadow: 2px 2px black;",
+      "", "color: #ff3838; font-size: 16px;", "color: gray;"
+    );
+  </script>
   <script defer src="scripts/hash.js"></script>
   <script defer src="scripts/overlay-toggle.js"></script>
   <script defer src="scripts/lobby-sidebar.js"></script>
@@ -79,9 +86,9 @@
       </div>
       <input id="lobbyNameInput" type="text" maxlength="24" placeholder="Lobby name">
       <div class="lobby-privacy">
-        <input id="lobbyPrivacyPublic" name="lobbyPrivacy" type="radio" value="public" checked>
+        <input id="lobbyPrivacyPublic" name="lobbyPrivacy" type="radio" value="public">
         <label for="lobbyPrivacyPublic" >🌎 <span>Public</span></label>
-        <input id="lobbyPrivacyPrivate" name="lobbyPrivacy" type="radio" value="private">
+        <input id="lobbyPrivacyPrivate" name="lobbyPrivacy" type="radio" value="private" checked>
         <label for="lobbyPrivacyPrivate">🔒 <span>Private</span></label>
       </div>
       <button id="createLobbyButton" class="round-button" onclick="createLobbyOverlay(0);">Create!</button>
@@ -91,19 +98,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDw7pbWV-PchJf8DWdYdCbTeKieQ_Z7HYY",
-      authDomain: "city-country-river-76537.firebaseapp.com",
-      databaseURL: "https://city-country-river-76537-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "city-country-river-76537",
-      storageBucket: "city-country-river-76537.firebasestorage.app",
-      messagingSenderId: "649795621050",
-      appId: "1:649795621050:web:80dd96692168e5d63f3283",
-      measurementId: "G-Y0WCVG5Z71"
-    };
-    firebase.initializeApp(firebaseConfig);
-  </script>
+  <script src="scripts/firebase-config.js"></script>
   <script src="scripts/app.js"></script>
 </body>
 </html>

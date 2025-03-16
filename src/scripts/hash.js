@@ -11,6 +11,8 @@ function router() {
   } else if (window.location.hash.startsWith('#lobby') && /\/\w{5}$/.test(window.location.hash)) {
     file = 'pages/lobby.html';
     document.title = "City Country River • Lobby";
+    document.getElementById('gameCode').textContent = window.location.hash.split('/')[1];
+    document.getElementById('headerGame').classList.add('active');
   } else if (window.location.hash.startsWith('#lobby')) {
     app.innerHTML = "Lobby code must be exactly 5 letters. Valid example URL: 'index.html#lobby/abcde'";
     document.title = "City Country River • Lobby (Invalid lobby code)";
@@ -27,8 +29,8 @@ function router() {
       if (this.status === 200) {
         app.innerHTML = this.responseText;
         if (window.location.hash.startsWith('#lobby/')) {
-          document.getElementById('gameCode').textContent = window.location.hash.split('/')[1];
-          document.getElementById('headerGame').classList.add('active');
+          // document.getElementById('gameCode').textContent = window.location.hash.split('/')[1];
+          // document.getElementById('headerGame').classList.add('active');
         }
       } else if (this.status === 404) { app.innerHTML = "Page not found."; }
       document.dispatchEvent(new Event('html-included'));

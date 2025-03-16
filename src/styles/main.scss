@@ -65,33 +65,50 @@ main {
             font-weight: 700;
             box-shadow: 0 0 16px rgba(black, 0.5);
             cursor: pointer;
+            overflow: hidden;
             transition-duration: 200ms;
-          
+
+            > * { z-index: 1; }
             &:hover { scale: 1.1; }
-            &:active { scale: 0.95; }
+
+            &:hover::before {
+              animation: shine 1.2s ease forwards;
+            }
+            
+            &::before {
+              content: '';
+              position: absolute;
+              left: -150%;
+              background: linear-gradient(115deg, rgba(255,255,255,0) 35%, rgba(255,255,255,0.45) 35%, rgba(255,255,255,0.45) 45%, rgba(255,255,255,0.8) 45%, rgba(255,255,255,0.8) 55%, rgba(255,255,255,0.45) 55%, rgba(255,255,255,0.45) 65%, rgba(255,255,255,0) 65%);
+              width: 250px;
+              height: 100%;
+              opacity: 0.4;
+            }
           }
       
-          > .create-lobby { background-color: rgba(255, 56, 56); }
+          > .create-lobby { background-color: rgba(255, 56, 56); &:active { scale: 0.95; } }
       
           > .join-lobby {
             display: flex;
             flex-direction: column;
             gap: 8px;
             background-color: rgb(40, 40, 255);
+
+            > div > input, > button {
+              background-color: #121212dd;
+              border: none;
+              border-radius: 12px;
+            }
       
             > div > input {
-              height: 32px;
-              width: 24px;
-              border: none;
-              border-radius: 8px;
+              height: 36px;
+              width: 28px;
               text-align: center;
             }
       
             > button {
+              width: 92px;
               padding: 8px;
-              background-color: #121212;
-              border: none;
-              border-radius: 8px;
               cursor: pointer;
             }
           }
@@ -978,6 +995,11 @@ main {
   0% { background-position: 0% 82%; }
   50% { background-position: 100% 19%; }
   100% { background-position: 0% 82%; }
+}
+
+@keyframes shine {
+  from { left: -100%; }
+  to { left: 100%; }
 }
 
 // The golden line of thousand 👑

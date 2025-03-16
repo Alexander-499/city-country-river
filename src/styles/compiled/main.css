@@ -64,16 +64,32 @@ main > div.home > section.play-section > div.play-section-center > div.play > di
   font-weight: 700;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  overflow: hidden;
   transition-duration: 200ms;
+}
+main > div.home > section.play-section > div.play-section-center > div.play > div > * {
+  z-index: 1;
 }
 main > div.home > section.play-section > div.play-section-center > div.play > div:hover {
   scale: 1.1;
 }
-main > div.home > section.play-section > div.play-section-center > div.play > div:active {
-  scale: 0.95;
+main > div.home > section.play-section > div.play-section-center > div.play > div:hover::before {
+  animation: shine 1.2s ease forwards;
+}
+main > div.home > section.play-section > div.play-section-center > div.play > div::before {
+  content: "";
+  position: absolute;
+  left: -150%;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.45) 35%, rgba(255, 255, 255, 0.45) 45%, rgba(255, 255, 255, 0.8) 45%, rgba(255, 255, 255, 0.8) 55%, rgba(255, 255, 255, 0.45) 55%, rgba(255, 255, 255, 0.45) 65%, rgba(255, 255, 255, 0) 65%);
+  width: 250px;
+  height: 100%;
+  opacity: 0.4;
 }
 main > div.home > section.play-section > div.play-section-center > div.play > .create-lobby {
   background-color: rgb(255, 56, 56);
+}
+main > div.home > section.play-section > div.play-section-center > div.play > .create-lobby:active {
+  scale: 0.95;
 }
 main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby {
   display: flex;
@@ -81,18 +97,19 @@ main > div.home > section.play-section > div.play-section-center > div.play > .j
   gap: 8px;
   background-color: rgb(40, 40, 255);
 }
-main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > div > input {
-  height: 32px;
-  width: 24px;
+main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > div > input, main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > button {
+  background-color: rgba(18, 18, 18, 0.8666666667);
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
+}
+main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > div > input {
+  height: 36px;
+  width: 28px;
   text-align: center;
 }
 main > div.home > section.play-section > div.play-section-center > div.play > .join-lobby > button {
+  width: 92px;
   padding: 8px;
-  background-color: #121212;
-  border: none;
-  border-radius: 8px;
   cursor: pointer;
 }
 main > div.home > section.play-section > div.play-section-bottom {
@@ -903,5 +920,13 @@ main > div.about {
   }
   100% {
     background-position: 0% 82%;
+  }
+}
+@keyframes shine {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 100%;
   }
 }/*# sourceMappingURL=main.css.map */
