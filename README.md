@@ -8,3 +8,5 @@ The game is still in early development and I don't know anything about servers a
 
 ### Website URL
 I haven't even bought a domain yet, but I will. I will probably get a domain for me, and a sub-site of it will be the game.
+
+## Credits
