@@ -1,36 +1,30 @@
-function generateRules() {
-  const categoriesContainer = document.getElementById('selectedCategories');
-  const categories = categoriesContainer ? Array.from(categoriesContainer.querySelectorAll('span')).map(span => span.textContent) : [];
-  const everybodyCanEditCategories = document.getElementById('everybodyCanEditCategories')?.checked || false;
-  const roundsInput = document.getElementById('rounds range');
-  const rounds = roundsInput ? parseInt(roundsInput.value, 10) : 1;
-  const roundEndForm = document.getElementById('roundEnd');
-  const roundEnd = roundEndForm ? (roundEndForm.querySelector('input:checked')?.parentElement.textContent.trim() || "") : "";
-  const timeLimitInput = document.getElementById('timeLimit range');
-  const timeLimit = timeLimitInput ? parseInt(timeLimitInput.value, 10) : 1;
-  const showScoresForm = document.getElementById('showScores');
-  const showScores = showScoresForm ? (showScoresForm.querySelector('input:checked')?.parentElement.textContent.trim() || "") : "";
-  const anonymousVoting = document.getElementById('anonymousVoting')?.checked || false;
-  const teamsEnabled = document.getElementById('teams')?.checked || false;
-  const everybodyCanChooseTeams = document.getElementById('everybodyCanChooseTeams')?.checked || false;
-  const teamElements = document.querySelectorAll('.team');
-  const teams = teamElements ? Array.from(teamElements).map(team => {
-    const nameInput = team.querySelector('input[type=text]');
-    const name = nameInput ? nameInput.value : "Unnamed Team";
-    const players = Array.from(team.querySelectorAll('.team-players div')).map(div => div.textContent);
-    return { name, players };
-  }) : [];
+document.addEventListener("html-included", () => {
+  const selectedCategories = document.getElementById('selectedCategories');
+  if (selectedCategories) new MutationObserver(() => {
+    updateSelectedCategoriesQuantity();
+  }).observe(selectedCategories, { childList: true, characterData: true, subtree: true });
 
-  const jsonData = {
-    categories, everybodyCanEditCategories, rounds, roundEnd, timeLimit, showScores, anonymousVoting,
-    teams: { enabled: teamsEnabled, everybodyCanChooseTeams, teamList: teams }
-  };
+  function updateSelectedCategoriesQuantity() {
+    const selectedCategoriesQuantity = document.getElementById('selectedCategoriesQuantity');
+    if (selectedCategories) selectedCategoriesQuantity.innerText = selectedCategories.childElementCount;
+  }
 
-  console.log(JSON.stringify(jsonData, null, 2));
-}
+  updateSelectedCategoriesQuantity();
 
-['input', 'change'].forEach(eventType =>
-  document.body.addEventListener(eventType, event => {
-    if (event.target.matches('input, #selectedCategories, .team')) { generateRules(event); }
-  })
-);
+  function animateLetterSelectionLetter() {
+    const allLetters = "abcdefghijklmnopqrstuvwxyzඞ";
+    const letterSelectionLetter = document.getElementById('letterSelectionLetter');
+    if (!letterSelectionLetter) return;
+    const initialLetter = letterSelectionLetter.innerHTML;
+    const randomLetter = () => allLetters[Math.floor(Math.random() * allLetters.length)];
+    const randomString = (length) => Array.from({ length }, randomLetter).join("");
+  
+    (function animate(speed = 10) {
+      if (speed > 150) return (letterSelectionLetter.innerHTML = initialLetter);
+      letterSelectionLetter.innerHTML = randomString(1);
+      setTimeout(() => animate(speed * 1.08), speed);
+    })();
+  }
+
+  animateLetterSelectionLetter();
+});

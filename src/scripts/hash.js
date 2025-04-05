@@ -1,5 +1,5 @@
+const app = document.getElementById('app');
 function router() {
-  const app = document.getElementById('app');
   let file = '';
 
   if (!window.location.hash) {

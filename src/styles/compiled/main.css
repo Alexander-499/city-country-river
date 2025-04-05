@@ -25,7 +25,7 @@ main > div.home > section.play-section > div.play-section-center {
   gap: 12px;
 }
 main > div.home > section.play-section > div.play-section-center > div.name {
-  width: 100%;
+  width: 400px;
 }
 main > div.home > section.play-section > div.play-section-center > div.name > div {
   width: 100%;
@@ -111,6 +111,117 @@ main > div.home > section.play-section > div.play-section-center > div.play > .j
   width: 92px;
   padding: 8px;
   cursor: pointer;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div {
+  height: 128px;
+  width: min-content;
+  display: flex;
+  border-radius: 16px;
+  background-color: ghostwhite;
+  overflow: hidden;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main > div.barcode {
+  height: 104px;
+  width: 24px;
+  position: relative;
+  overflow: hidden;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main > div.barcode::before {
+  height: 32px;
+  width: 128px;
+  content: "";
+  position: absolute;
+  left: -300%;
+  height: 100%;
+  background-image: url(https://quickchart.io/barcode?type=code128&text=???&height=20&width=128);
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  transform: rotate(90deg);
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main > div.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  color: black;
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/a/ad/BlankMap-World_gray.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 120%;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main > div.center > div.top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main > div.center > div.top > div {
+  display: flex;
+  flex-direction: column;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main > div.center > div.top > div > span:first-of-type {
+  font-weight: 900;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main > div.center > div.lobby-code {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.main > div.center > div.lobby-code > div {
+  height: 32px;
+  width: 32px;
+  background-image: url(../../assets/images/icons/airplane.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.side {
+  height: 100%;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #ff3838;
+  border-left: 3px black dotted;
+  padding: 12px;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.side > div.barcode {
+  height: 32px;
+  width: calc(100% + 24px);
+  background-image: url(https://barcodeapi.org/api/auto/Ab?fg=ffffff&bg=ff3838);
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: pixelated;
+  transform: translateX(-12px);
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.side > button {
+  height: calc(100% - 64px);
+  background-color: transparent;
+  font-size: 18px;
+  border: 2px white dotted;
+  border-radius: 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.side > button:hover {
+  transform: scale(1.1);
+}
+main > div.home > section.play-section > div.play-section-center > div.public-lobbies > div > div.side > button:active {
+  font-size: 22px;
+  transform: scale(0.9);
 }
 main > div.home > section.play-section > div.play-section-bottom {
   padding: 12px 0;
@@ -713,6 +824,190 @@ main > div.game > div.main > div.top-bar > div {
   display: flex;
   gap: 8px;
 }
+main > div.game > div.main > div.middle {
+  height: calc(100% - 56px);
+  overflow-y: auto;
+}
+main > div.game > div.main > div.middle > div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main > div.game > div.main > div.middle > div.letter-selection > span {
+  font-size: 384px;
+  font-family: Consolas;
+  text-shadow: 0 0 128px white;
+  text-transform: uppercase;
+}
+main > div.game > div.main > div.middle > div.type-words {
+  flex-direction: column;
+  gap: 16px;
+}
+main > div.game > div.main > div.middle > div.type-words > div.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+main > div.game > div.main > div.middle > div.type-words > div.heading > h1 > span {
+  font-size: 48px;
+  text-shadow: 0 0 6px white;
+  text-transform: capitalize;
+}
+main > div.game > div.main > div.middle > div.type-words > div.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  border-radius: 8px;
+}
+main > div.game > div.main > div.middle > div.type-words > div.inputs > div {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 12px;
+  font-weight: 900;
+}
+main > div.game > div.main > div.middle > div.type-words > div.inputs > div > div.input > input {
+  height: 40px;
+  width: 256px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px) brightness(1.1);
+  border: 1px rgba(255, 255, 255, 0.3) solid;
+  border-radius: 8px;
+  padding: 0 8px;
+}
+main > div.game > div.main > div.middle > div.type-words > .done-container > button {
+  height: 40px;
+  width: 128px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-weight: 900;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.main > div.middle > div.type-words > .done-container > button:hover {
+  scale: 1.1;
+}
+main > div.game > div.main > div.middle > div.type-words > .done-container > button:active {
+  scale: 0.9;
+}
+main > div.game > div.main > div.middle > div.voting {
+  flex-direction: column;
+  gap: 16px;
+}
+main > div.game > div.main > div.middle > div.voting > div.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+main > div.game > div.main > div.middle > div.voting > div.center {
+  width: calc(100% - 64px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div {
+  width: min(100%, 1280px);
+  border-radius: 16px;
+  overflow: hidden;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.top {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(45deg, green, greenyellow);
+  padding: 0 16px;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 16px;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.left > b {
+  background-color: dodgerblue;
+  text-shadow: 2px 2px black;
+  border-radius: 16px;
+  padding: 4px 8px 6px;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.left > span.word {
+  color: aqua;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.left > span.points {
+  font-weight: 900;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.right {
+  display: flex;
+  gap: 8px;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.right > button {
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 8px;
+  padding: 0 8px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.right > button:hover {
+  scale: 1.1;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.right > button:active {
+  scale: 0.9;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.right > button > div {
+  height: 24px;
+  width: 24px;
+  background-color: white;
+  transition-duration: 200ms;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.right > button.decline > div {
+  mask-image: url("../../assets/images/icons/dislike.svg");
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.right > button.awesome > div {
+  mask-image: url("../../assets/images/icons/like.svg");
+}
+main > div.game > div.main > div.middle > div.voting > div.center > div > div.main > div.right > button.search > div {
+  mask-image: url("../../assets/images/icons/search.svg");
+}
+main > div.game > div.main > div.middle > div.voting > div.buttons {
+  display: flex;
+  gap: 8px;
+}
+main > div.game > div.main > div.middle > div.voting > div.buttons > button {
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-weight: 900;
+  border: none;
+  border-radius: 8px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+main > div.game > div.main > div.middle > div.voting > div.buttons > button:hover {
+  scale: 1.1;
+}
+main > div.game > div.main > div.middle > div.voting > div.buttons > button:active {
+  scale: 0.9;
+}
+main > div.game > div.main > div.middle > div.voting > div.buttons > button.red {
+  color: crimson;
+}
+main > div.game > div.main > div.middle > div.voting > div.buttons > button.green {
+  color: greenyellow;
+}
 main > div.game > div.sidebar {
   width: 400px;
   background-color: #313338;
@@ -840,7 +1135,7 @@ main > div.game > div.sidebar > div.lobby > div.player-search {
   align-items: center;
   justify-content: center;
 }
-main > div.game > div.sidebar > div.lobby > div.player-search > input[type=text] {
+main > div.game > div.sidebar > div.lobby > div.player-search > input[type=search] {
   height: 32px;
   width: calc(100% - 32px);
   background-color: #1e1f22;
@@ -854,7 +1149,7 @@ main > div.game > div.sidebar > div.lobby > div.players {
   gap: 4px;
   padding: 0 8px;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item {
   height: 48px;
   display: flex;
   align-items: center;
@@ -865,35 +1160,38 @@ main > div.game > div.sidebar > div.lobby > div.players > div {
   cursor: pointer;
   transition-duration: 200ms;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div:hover {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item:hover {
   background-color: #2d2f33;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div > div.main {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item.hidden {
+  display: none;
+}
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item > div.main {
   display: flex;
   gap: 8px;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div > div.main > img {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item > div.main > img {
   height: 36px;
   border-radius: 18px;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div > div.main > div {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item > div.main > div {
   display: flex;
   flex-direction: column;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div > div.main > div > span.nickname {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item > div.main > div > span.nickname {
   font-weight: 700;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div > div.main > div > span.auth-name {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item > div.main > div > span.auth-name {
   font-family: Consolas;
   font-size: 14px;
   color: gray;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div > div.badges > div {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item > div.badges > div {
   border-radius: 4px;
   padding: 0 2px 6px;
   cursor: help;
 }
-main > div.game > div.sidebar > div.lobby > div.players > div > div.badges > div.lobby-leader {
+main > div.game > div.sidebar > div.lobby > div.players > div.player-item > div.badges > div.lobby-leader {
   background-color: rgba(218, 165, 32, 0.3);
 }
 main > div.about {

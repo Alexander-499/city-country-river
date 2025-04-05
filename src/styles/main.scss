@@ -24,7 +24,7 @@ main {
         gap: 12px;
 
         > div.name {
-          width: 100%;
+          width: 400px;
 
           > div {
             width: calc(100%);
@@ -110,6 +110,131 @@ main {
               width: 92px;
               padding: 8px;
               cursor: pointer;
+            }
+          }
+        }
+
+        > div.public-lobbies {
+          display: flex;
+          gap: 16px;
+          margin-top: 12px;
+
+          > div {
+            height: 128px;
+            width: min-content;
+            display: flex;
+            border-radius: 16px;
+            background-color: ghostwhite;
+            overflow: hidden;
+
+            > div.main {
+              display: flex;
+              gap: 16px;
+              padding: 12px;
+
+              > div.barcode {
+                height: 104px;
+                width: 24px;
+                position: relative;
+                overflow: hidden;
+                
+                &::before {
+                  height: 32px;
+                  width: 128px;
+                  content: '';
+                  position: absolute;
+                  left: -300%;
+                  height: 100%;
+                  background-image: url(https://quickchart.io/barcode?type=code128&text=???&height=20&width=128);
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                  image-rendering: pixelated;
+                  transform: rotate(90deg);
+                }
+              }
+
+              > div.center {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                color: black;
+                background-image: url(https://upload.wikimedia.org/wikipedia/commons/a/ad/BlankMap-World_gray.svg);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 120%;
+
+                > div.top {
+                  width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+
+                  > div {
+                    display: flex;
+                    flex-direction: column;
+
+                    > span:first-of-type {
+                      font-weight: 900;
+                    }
+                  }
+                }
+
+                > div.lobby-code {
+                  width: 100%;
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  font-size: 20px;
+                  font-weight: 700;
+                  text-transform: uppercase;
+
+                  > div {
+                    height: 32px;
+                    width: 32px;
+                    background-image: url(../../assets/images/icons/airplane.svg);
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                  }
+                }
+              }
+            }
+
+            > div.side {
+              height: 100%;
+              width: 72px;
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              background-color: #ff3838;
+              border-left: 3px black dotted;
+              padding: 12px;
+
+              > div.barcode {
+                height: 32px;
+                width: calc(100% + 24px);
+                background-image: url(https://barcodeapi.org/api/auto/Ab?fg=ffffff&bg=ff3838);
+                background-repeat: no-repeat;
+                background-size: cover;
+                image-rendering: pixelated;
+                transform: translateX(-12px);
+              }
+
+              > button {
+                height: calc(100% - 64px);
+                background-color: transparent;
+                font-size: 18px;
+                border: 2px white dotted;
+                border-radius: 8px;
+                cursor: pointer;
+                transition-duration: 200ms;
+
+                &:hover { transform: scale(1.1); }
+
+                &:active {
+                  font-size: 22px;
+                  transform: scale(0.9);
+                }
+              }
             }
           }
         }
@@ -771,6 +896,196 @@ main {
           gap: 8px;
         }
       }
+
+      > div.middle {
+        height: calc(100% - 56px);
+        overflow-y: auto;
+
+        > div {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        > div.letter-selection {
+          > span {
+            font-size: 384px;
+            font-family: Consolas;
+            text-shadow: 0 0 128px white;
+            text-transform: uppercase;
+          }
+        }
+
+        > div.type-words {
+          flex-direction: column;
+          gap: 16px;
+
+          > div.heading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            > h1 > span {
+              font-size: 48px;
+              text-shadow: 0 0 6px white;
+              text-transform: capitalize;
+            }
+          }
+
+          > div.inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-color: rgba(black, 0.3);
+            padding: 16px;
+            border-radius: 8px;
+
+            > div {
+              display: flex;
+              align-items: center;
+              justify-content: right;
+              gap: 12px;
+              font-weight: 900;
+
+              > div.input > input {
+                height: 40px;
+                width: 256px;
+                background-color: rgba(black, 0.5);
+                backdrop-filter: blur(16px) brightness(1.1);
+                border: 1px rgba(white, 0.3) solid;
+                border-radius: 8px;
+                padding: 0 8px;
+              }
+            }
+          }
+
+          > .done-container > button {
+            height: 40px;
+            width: 128px;
+            background-color: rgba(black, 0.5);
+            font-weight: 900;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition-duration: 200ms;
+          
+            &:hover { scale: 1.1; }
+            &:active { scale: 0.9; }
+          }
+        }
+
+        > div.voting {
+          flex-direction: column;
+          gap: 16px;
+
+          > div.heading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
+
+          > div.center {
+            width: calc(100% - 64px);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 16px;
+
+            > div {
+              width: min(100%, 1280px);
+              border-radius: 16px;
+              overflow: hidden;
+
+              > div.top {
+                height: 48px;
+                display: flex;
+                align-items: center;
+                background: linear-gradient(45deg, green, greenyellow);
+                padding: 0 16px;
+              }
+
+              > div.main {
+                display: flex;
+                justify-content: space-between;
+                background-color: rgba(black, 0.3);
+                padding: 16px;
+
+                > div.left {
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+
+                  > b {
+                    background-color: dodgerblue;
+                    text-shadow: 2px 2px black;
+                    border-radius: 16px;
+                    padding: 4px 8px 6px;
+                  }
+
+                  > span.word { color: aqua; }
+                  > span.points { font-weight: 900; }
+                }
+
+                > div.right {
+                  display: flex;
+                  gap: 8px;
+
+                  > button {
+                    height: 40px;
+                    background-color: rgba(black, 0.5);
+                    border: none;
+                    border-radius: 8px;
+                    padding: 0 8px;
+                    cursor: pointer;
+                    transition-duration: 200ms;
+
+                    &:hover { scale: 1.1; }
+                    &:active { scale: 0.9; }
+
+                    > div {
+                      height: 24px;
+                      width: 24px;
+                      background-color: white;
+                      transition-duration: 200ms;
+
+                      // No good SVGs found :(
+                      mask-repeat: no-repeat;
+                      mask-position: center;
+                    }
+
+                    &.decline > div { mask-image: url('../../assets/images/icons/dislike.svg'); }
+                    &.awesome > div { mask-image: url('../../assets/images/icons/like.svg'); }
+                    &.search > div { mask-image: url('../../assets/images/icons/search.svg'); }
+                  }
+                }
+              }
+            }
+          }
+
+          > div.buttons {
+            display: flex;
+            gap: 8px;
+
+            > button {
+              height: 40px;
+              background-color: rgba(black, 0.5);
+              font-weight: 900;
+              border: none;
+              border-radius: 8px;
+              padding: 0 16px;
+              cursor: pointer;
+              transition-duration: 200ms;
+            
+              &:hover { scale: 1.1; }
+              &:active { scale: 0.9; }
+              &.red { color: crimson; }
+              &.green { color: greenyellow; }
+            }
+          }
+        }
+      }
     }
 
     > div.sidebar {
@@ -905,7 +1220,7 @@ main {
           align-items: center;
           justify-content: center;
 
-          > input[type=text] {
+          > input[type=search] {
             height: 32px;
             width: calc(100% - 32px);
             background-color: #1e1f22;
@@ -921,7 +1236,7 @@ main {
           gap: 4px;
           padding: 0 8px;
 
-          > div {
+          > div.player-item {
             height: 48px;
             display: flex;
             align-items: center;
@@ -933,6 +1248,7 @@ main {
             transition-duration: 200ms;
 
             &:hover { background-color: #2d2f33; }
+            &.hidden { display: none; }
 
             > div.main {
               display: flex;
@@ -1001,5 +1317,3 @@ main {
   from { left: -100%; }
   to { left: 100%; }
 }
-
-// The golden line of thousand 👑

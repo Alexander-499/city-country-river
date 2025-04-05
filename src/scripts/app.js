@@ -25,59 +25,38 @@ document.addEventListener("html-included", () => {(function () {
   let playerId;
   let playersRef;
   let playerRef;
+  let chatLogRef;
+  let rulesRef;
   let lobbyCode = window.location.hash.split('/')[1];
   if (window.location.hash.startsWith('#lobby') && /\/\w{5}$/.test(window.location.hash)) {
     console.log("Lobby code: " + lobbyCode);
   }
 
-  let chatLogRef;
   const chatContainer = document.getElementById("chatLog");
   const gameContainer = document.querySelector(".game-container");
   const playerNameInput = document.getElementById("username");
   const lobbyName = document.getElementById("lobbyName");
   const lobbyPrivateIcon = document.getElementById("lobbyPrivateIcon");
   const lobbyPublicIcon = document.getElementById("lobbyPublicIcon");
+  const remainingPlayersToStartGame = document.getElementById("remainingPlayersToStartGame");
 
-  // Deletes empty lobbies after 10 secs
-  const emptyLobbies = {}; // Stores timers for lobbies with no players
-  function watchLobbiesForEmptyPlayers() {
-    firebase.database().ref('lobbies').on('value', (snapshot) => {
-      snapshot.forEach(lobbySnapshot => {
-        const lobbyId = lobbySnapshot.key;
-        const playersSnapshot = lobbySnapshot.child('players');
+  playerNameInput.value = localStorage.getItem("name");
 
-        if (!playersSnapshot.exists() || Object.keys(playersSnapshot.val() || {}).length === 0) {
-          // If already scheduled for deletion, do nothing
-          if (!emptyLobbies[lobbyId]) {
-            console.log(`Lobby ${lobbyId} is empty. Deleting in 10 seconds if no players join.`);
-
-            // Set a timeout to delete the lobby after 10 seconds
-            emptyLobbies[lobbyId] = setTimeout(() => {
-              firebase.database().ref(`lobbies/${lobbyId}`).remove().then(() => {
-                console.log(`Lobby ${lobbyId} deleted due to inactivity.`);
-                delete emptyLobbies[lobbyId]; // Remove from tracking
-              });
-            }, 10000);
-          }
-        } else {
-          // If players join back, cancel the deletion
-          if (emptyLobbies[lobbyId]) {
-            clearTimeout(emptyLobbies[lobbyId]);
-            delete emptyLobbies[lobbyId];
-            console.log(`Lobby ${lobbyId} is no longer empty. Deletion canceled.`);
-          }
-        }
-      });
-    });
-  }
-  watchLobbiesForEmptyPlayers();
+  playerNameInput.addEventListener("change", (e) => {
+    const newName = e.target.value || createName();
+    localStorage.setItem("name", newName)
+    e.target.value = newName;
+  });
 
   function initGame() {
+    const playerNames = {};
+
     // Updates player name with text input
     playerNameInput.addEventListener("change", (e) => {
       const newName = e.target.value || createName();
       playerNameInput.value = newName;
       playerRef.update({ name: newName })
+      localStorage.setItem("name", newName);
       console.log("Your new name: " + newName);
     })
 
@@ -92,6 +71,21 @@ document.addEventListener("html-included", () => {(function () {
         return snapshot.val() || false; // Default name if not found
       });
     }
+
+    playersRef.on("value", async (snapshot) => {
+      const players = snapshot.val();
+
+      if (players && Object.keys(players).length === 1) {
+        playerRef.update({ operator: true })
+          .catch((error) => console.error("Error setting operator:", error));
+      }
+    });
+
+    playersRef.on("value", async (snapshot) => {
+      if (remainingPlayersToStartGame) {
+        remainingPlayersToStartGame.innerHTML = Math.max(0, 2 - Object.keys(snapshot.val()).length);
+      }
+    });
 
     // Reference to the players in Firebase
     const playerListContainer = document.getElementById("playerList");
@@ -134,7 +128,9 @@ document.addEventListener("html-included", () => {(function () {
         }
 
         // Update existing player info
-        playerElement.querySelector(".player-img").src = player.avatar || "https://picsum.photos/id/1025/600";
+        if (playerElement.querySelector(".player-img")) {
+          playerElement.querySelector(".player-img").src = player.avatar || "https://picsum.photos/600/600?random";
+        }
         playerElement.querySelector(".nickname").textContent = player.name || `${playerId}`;
         playerElement.querySelector(".auth-name").textContent = `${playerId}`;
 
@@ -159,7 +155,6 @@ document.addEventListener("html-included", () => {(function () {
       lobbyPublicIcon.classList.toggle('active', snapshot.val());
     });
 
-    const playerNames = {};
     playersRef.on("child_added", playersRef.on("child_changed", async (snapshot) => {
       playerNames[snapshot.key] = await getPlayerName(snapshot.key);
     }));
@@ -213,8 +208,6 @@ document.addEventListener("html-included", () => {(function () {
 
     // Sends a chat message
     async function sendMessage(event) {
-      // Object.entries(players).forEach(([playerId, player]) => {})
-
       event.preventDefault(); // Prevent form submission
 
       const messageInput = document.getElementById("chatTextarea");
@@ -269,7 +262,7 @@ document.addEventListener("html-included", () => {(function () {
           messageDiv.appendChild(badgeSpan);
         }
 
-        if (message.type === "join" || message.type === "leave") {
+        if (message.type === "join" || message.type === "leave" || message.type === "operator") {
           // Handle join/leave messages
           const systemMessageSpan = document.createElement("span");
           systemMessageSpan.classList.add("game-message", message.type);
@@ -298,12 +291,52 @@ document.addEventListener("html-included", () => {(function () {
       });
     }
 
+    function generateRules() {
+      const categoriesContainer = document.getElementById('selectedCategories');
+      const categories = categoriesContainer ? Array.from(categoriesContainer.querySelectorAll('span')).map(span => span.textContent) : [];
+      const everybodyCanEditCategories = document.getElementById('everybodyCanEditCategories')?.checked || false;
+      const roundsInput = document.getElementById('rounds range');
+      const rounds = roundsInput ? parseInt(roundsInput.value, 10) : 1;
+      const roundEndForm = document.getElementById('roundEnd');
+      const roundEnd = roundEndForm ? (roundEndForm.querySelector('input:checked')?.getAttribute("id") || "") : "";
+      const timeLimitInput = document.getElementById('timeLimit range');
+      const timeLimit = timeLimitInput ? parseInt(timeLimitInput.value, 10) : 1;
+      const showScoresForm = document.getElementById('showScores');
+      const showScores = showScoresForm ? (showScoresForm.querySelector('input:checked')?.getAttribute("id") || "") : "";
+      const anonymousVoting = document.getElementById('anonymousVoting')?.checked || false;
+      const teamsEnabled = document.getElementById('teams')?.checked || false;
+      const everybodyCanChooseTeams = document.getElementById('everybodyCanChooseTeams')?.checked || false;
+      const teamElements = document.querySelectorAll('.team');
+      const teams = teamElements ? Array.from(teamElements).map(team => {
+        const nameInput = team.querySelector('input[type=text]');
+        const name = nameInput ? nameInput.value : "Unnamed Team";
+        const players = Array.from(team.querySelectorAll('.team-players div')).map(div => div.textContent);
+        return { name, players };
+      }) : [];
+
+      const jsonData = {
+        categories, everybodyCanEditCategories, rounds, roundEnd, timeLimit, showScores, anonymousVoting,
+        teams: { enabled: teamsEnabled, everybodyCanChooseTeams, teamList: teams }
+      };
+
+      rulesRef.set(jsonData);
+    }
+
     if (document.getElementById("chatForm")) {
       document.getElementById("chatForm").addEventListener("submit", sendMessage);
     }
 
+    ['input', 'change'].forEach(eventType =>
+      document.body.addEventListener(eventType, event => {
+        if (event.target.matches('.game fieldset input, .game fieldset .game fieldset #selectedCategories, .game fieldset .team')) {
+          generateRules(event);
+        }
+      })
+    );
+
     playersRef.on("value", updatePlayerList);
     listenForMessages();
+    generateRules()
   }
   
   // Create a new lobby in Firebase with a random code
@@ -323,7 +356,7 @@ document.addEventListener("html-included", () => {(function () {
     }).then(() => {
       console.log(`Lobby created with code: ${randomCode}`);
       window.location.hash = `#lobby/${randomCode}`;
-      authGame();
+      authGame()
     }).catch((error) => {
       console.error("Error creating lobby:", error);
     });
@@ -341,9 +374,11 @@ document.addEventListener("html-included", () => {(function () {
             playersRef =  firebase.database().ref(`lobbies/${lobbyCode}/players`);
             playerRef = firebase.database().ref(`lobbies/${lobbyCode}/players/${playerId}`);
             chatLogRef = firebase.database().ref(`lobbies/${lobbyCode}/chatLog`);
+            rulesRef = firebase.database().ref(`lobbies/${lobbyCode}/rules`);
 
-            const name = playerNameInput && playerNameInput.value.trim() ? playerNameInput.value : createName();
+            const name = localStorage.getItem("name") || (playerNameInput?.value.trim() || createName());
             playerNameInput.value = name;
+            localStorage.setItem("name", name);
 
             playerRef.set({
               id: playerId,
@@ -355,14 +390,13 @@ document.addEventListener("html-included", () => {(function () {
             initGame();
           } else {
             console.log(`Lobby ${lobbyCode} does not exist.`);
+            app.innerHTML = `Lobby ${lobbyCode} does not exist.`;
           }
         });
       } else if (window.location.hash.startsWith('#lobby') && /\/\w{5}$/.test(window.location.hash)) {
         console.log('You are logged out')
       }
     })
-
-    watchLobbiesForEmptyPlayers();
   }
 
   authGame();

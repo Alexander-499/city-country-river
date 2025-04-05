@@ -7,7 +7,7 @@
           <div>
             <div class="label"><span>Categories</span></div>
             <div class="field categories">
-              <h4>Selected (<span>3</span>)</h4>
+              <h4>Selected (<span id="selectedCategoriesQuantity">Loading...</span>)</h4>
               <div id="selectedCategories" class="selected">
                 <span>City</span>
                 <span>Country</span>
@@ -51,9 +51,9 @@
           <div>
             <div class="label"><span>Round end</span></div>
             <div class="field"><form id="roundEnd" class="radio">
-              <label class="red"><input type="radio" name="radio">Press stop</label>
-              <label class="yellow"><input type="radio" name="radio" checked>Press stop & time limit</label>
-              <label class="green"><input type="radio" name="radio">Time limit</label>
+              <label class="red"><input id="pressStop" type="radio" name="radio">Press stop</label>
+              <label class="yellow"><input id="pressStopAndTimeLimit" type="radio" name="radio" checked>Press stop & time limit</label>
+              <label class="green"><input id="timeLimit" type="radio" name="radio">Time limit</label>
             </form></div>
           </div>
           <div>
@@ -69,9 +69,9 @@
           <div>
             <div class="label"><span>Show scores</span></div>
             <div class="field"><form id="showScores" class="radio">
-              <label class="yellow"><input type="radio" name="radio">Live, during voting</label>
-              <label class="green"><input type="radio" name="radio" checked>After each round</label>
-              <label class="blue"><input type="radio" name="radio">Game end</label>
+              <label class="yellow"><input id="duringVoting" type="radio" name="radio">Live, during voting</label>
+              <label class="green"><input id="afterRound" type="radio" name="radio" checked>After each round</label>
+              <label class="blue"><input id="gameEnd" type="radio" name="radio">Game end</label>
             </form></div>
           </div>
           <div class="row">
@@ -134,7 +134,7 @@
   </div>
   <div class="main">
     <div class="top-bar">
-      <span class="player-wait">⏳ Waiting for <span>2</span> more players…</span>
+      <span class="player-wait">⏳ Waiting for <span id="remainingPlayersToStartGame"></span> more players…</span>
       <span class="close-rules">📜 Close the rules to start the game…</span>
       <div>
         <button class="round-button" onclick="document.querySelector(`.game > .rules`)?.classList.toggle(`active`);">Edit rules</button>
@@ -142,8 +142,86 @@
       </div>
     </div>
     <div class="middle">
-      <!-- Main Game -->
-      <div class="game-container" style="display: none;"></div>
+      <div class="not-playing">
+        <h1>City<br>Country<br>River</h1>
+      </div>
+      <div class="letter-selection">
+        <span id="letterSelectionLetter">a</span>
+      </div>
+      <div class="type-words">
+        <div class="heading">
+          <h1>Letter: <span>a</span></h1>
+          <p>Enter words that match the given letter and fit the category.</p>
+        </div>
+        <div class="inputs">
+          <div>
+            <div><span>City</span></div>
+            <div class="input"><input type="text" placeholder="Type a city starting with 'A'"></div>
+          </div>
+          <div>
+            <div><span>Country</span></div>
+            <div class="input"><input type="text" placeholder="Type a country starting with 'A'"></div>
+          </div>
+          <div>
+            <div><span>River</span></div>
+            <div class="input"><input type="text" placeholder="Type a river starting with 'A'"></div>
+          </div>
+          <div>
+            <div><span>Name</span></div>
+            <div class="input"><input type="text" placeholder="Type a name starting with 'A'"></div>
+          </div>
+          <div>
+            <div><span>Hobby</span></div>
+            <div class="input"><input type="text" placeholder="Type a hobby starting with 'A'"></div>
+          </div>
+        </div>
+        <div class="done-container">
+          <button>Done</button>
+        </div>
+      </div>
+      <div class="voting">
+        <div class="heading">
+          <h1>Vote & Discuss</h1>
+          <p>See what others have written, vote on their words,<br>and discuss any wrong answers.</p>
+        </div>
+        <div class="center">
+          <div>
+            <div class="top"><h2>City</h2></div>
+            <div class="main">
+              <div class="left">
+                <b>Alexander499</b>
+                <span class="word">Ankara</span>
+                <span class="points">+10</span>
+              </div>
+              <div class="right">
+                <button class="decline" title="Decline"><div></div></button>
+                <button class="awesome" title="Awesome"><div></div></button>
+                <button class="search" title="Search the internet"><div></div></button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="top"><h2>Country</h2></div>
+            <div class="main">
+              <div class="left">
+                <b>Guest #1</b>
+                <span class="word">Armenia</span>
+                <span class="points">+10</span>
+              </div>
+              <div class="right">
+                <button class="decline" title="Decline"><div></div></button>
+                <button class="awesome" title="Awesome"><div></div></button>
+                <button class="search" title="Search the internet"><div></div></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="red">Restart Round</button>
+          <button class="red">Force Done</button>
+          <button class="green">Done (<span>0/1</span>)</button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="sidebar">
@@ -161,7 +239,7 @@
     </div>
     <div id="sidebarLobby" class="lobby">
       <div class="player-search">
-        <input type="text" placeholder="Search players…">
+        <input id="sidebarLobbySearch" type="search" placeholder="Search players…">
       </div>
       <div id="playerList" class="players"></div>
     </div>

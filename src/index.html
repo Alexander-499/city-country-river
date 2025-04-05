@@ -5,10 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Alexander499">
+  <meta name="description" content="City Country River is an open source online party game similar to Categories (game). The name comes from 'Stadt Land Fluss' which is the german version of the game.">
+  <meta name="keywords" content="City Country River, Categories">
 
   <!-- Tab -->
   <title>City Country River • Home</title>
-  <link rel="shortcut icon" href="favicon.svg"/>
+  <link rel="shortcut icon" href type="image/x-icon">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,13 +25,13 @@
   <link rel="stylesheet" href="styles/compiled/create-lobby-overlay.css">
 
   <!-- Scripts -->
-  <script>
+  <noscript>
     console.info(
       "%c⚠️ STOP! DO NOT ENTER OR PASTE ANYTHING HERE! ⚠️%c\n%cYou have a 99% chance of being scammed. %c(Unless you know what you are doing!)",
-      "background: #ff3838; color: white; font-size: 24px; font-weight: 900; border-radius: 32px; padding: 4px 12px; text-shadow: 2px 2px black;",
+      "background: #ff3838bb; color: white; font-size: 24px; font-weight: 900; border-radius: 32px; padding: 4px 12px; text-shadow: 2px 2px black;",
       "", "color: #ff3838; font-size: 16px;", "color: gray;"
     );
-  </script>
+  </noscript>
   <script defer src="scripts/hash.js"></script>
   <script defer src="scripts/overlay-toggle.js"></script>
   <script defer src="scripts/lobby-sidebar.js"></script>
@@ -40,6 +42,7 @@
   <noscript>Either you have disabled JavaScript or your browser doesn't support it. Get a new Browser (e.g. Google Chrome, Microsoft Edge, Safari, Mozilla Firefox, Opera).</noscript>
 </head>
 <body>
+  <div class="version">alpha 0.0.0</div>
   <header>
     <div class="header-left">
       <a href onclick="if (window.location.hash.startsWith('#lobby')) { return confirm('Leave this lobby?'); }">City Country River</a>
@@ -68,7 +71,7 @@
         <div class="profile-name">
           <span style="font-size: smaller;">
             <input id="username" type="text" placeholder="Enter a username">
-            <br>Profiles r not available yet
+            <br>Profiles are still unavailable
           </span>
           <!-- <div><span>LVL 0</span><progress max="100"></progress></div> -->
         </div>

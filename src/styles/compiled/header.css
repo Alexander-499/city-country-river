@@ -160,7 +160,7 @@ header > .header-right > .profile {
 header > .header-right > .profile > .profile-picture {
   height: 40px;
   width: 40px;
-  background-image: url(https://c.makeitmeme.com/avatar/cool-pepe-d239a60d-K6MPtevh.webp);
+  background-image: url(https://picsum.photos/600/600?random);
   background-position: center;
   background-size: contain;
   border-radius: 50%;
