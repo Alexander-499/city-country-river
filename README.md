@@ -1,5 +1,5 @@
 # City Country River
-City Country River is an open source online party game similar to [Categories (game)](https://en.wikipedia.org/wiki/Categories_(game)). The name comes from 'Stadt Land Fluss' which is the german version of the game.
+City Country River is an open source online party game similar to [Categories](https://en.wikipedia.org/wiki/Categories_(game)). The name comes from 'Stadt Land Fluss' which is the german version of the game.
 
 ## Release
 
