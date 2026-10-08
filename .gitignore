@@ -1,2 +1,3 @@
 .env
 src/scripts/firebase-config.js
+node_modules
